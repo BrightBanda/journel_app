@@ -8,43 +8,56 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF1E1E1E),
+        elevation: 0,
+        titleSpacing: 16,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              'Journel',
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-            SizedBox(width: 40),
-            Text(
-              'saturday, february 21, 2026',
+            const Text(
+              'Journal',
               style: TextStyle(
-                fontSize: 16,
-                color: const Color.fromARGB(255, 176, 176, 176),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Text(
+              'Saturday, February 21, 2026',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[400],
+                fontWeight: FontWeight.w400,
               ),
             ),
           ],
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 137, 250),
       ),
-      body: ListView(
-        children: [
-          NoteCard(
-            detals: "this",
-            moodIcon: Icon(Icons.emoji_emotions),
-            title: "Project Idea",
-            folder: "Personal",
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: ListView(
+          children: const [
+            NoteCard(
+              detals:
+                  "this is the day i rembered nothing makes sense even this thing",
+              moodIcon: Icon(Icons.emoji_emotions, color: Colors.amber),
+              title: "Project Idea",
+              folder: "Personal",
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
+        backgroundColor: Colors.blueAccent,
+        shape: const CircleBorder(),
+        elevation: 4,
         onPressed: () {
           Navigator.pushNamed(context, "/AddNotePage");
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add, size: 26),
       ),
     );
   }
