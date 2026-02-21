@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({super.key});
+  final String title;
+  final Icon moodIcon;
+  final String detals;
+  final String folder;
+  const NoteCard({
+    super.key,
+    required this.title,
+    required this.moodIcon,
+    required this.detals,
+    required this.folder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +33,17 @@ class NoteCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.emoji_emotions, size: 25, color: Colors.yellow),
-                Text("Personal", style: TextStyle(fontSize: 15)),
+                moodIcon,
+                Text(folder, style: TextStyle(fontSize: 15)),
               ],
             ),
             SizedBox(height: 5),
             //title row
-            Text("Project Ideas", style: TextStyle(fontSize: 20)),
+            Text(title, style: TextStyle(fontSize: 20)),
 
             //details row
             SizedBox(height: 5),
-            Text(
-              "Had a breakthrough idea for the new interface. Had a breakthrough idea for the new interface idea for the new interface",
-            ),
+            Text(detals),
           ],
         ),
       ),

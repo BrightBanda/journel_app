@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/presentation/view/calender_page.dart';
 import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/view/home_page.dart';
@@ -40,6 +41,9 @@ class MyApp extends ConsumerWidget {
           ],
         ),
       ),
+
+      initialRoute: "/",
+      routes: {"/AddNotePage": (context) => const AddNotePage()},
     );
   }
 }

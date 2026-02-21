@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,10 +29,21 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 0, 137, 250),
       ),
-      body: ListView(children: [NoteCard(), NoteCard()]),
+      body: ListView(
+        children: [
+          NoteCard(
+            detals: "this",
+            moodIcon: Icon(Icons.emoji_emotions),
+            title: "Project Idea",
+            folder: "Personal",
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, "/AddNotePage");
+        },
         child: Icon(Icons.add),
       ),
     );
