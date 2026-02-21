@@ -9,8 +9,8 @@ class AddNotePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
-        title: const Text("Add Note"),
-        backgroundColor: const Color.fromARGB(255, 210, 206, 206),
+        title: const Text("Add Note", style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color.fromARGB(255, 19, 19, 19),
         elevation: 0,
       ),
       body: Padding(

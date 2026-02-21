@@ -25,19 +25,27 @@ class MyApp extends ConsumerWidget {
     final navNotifier = ref.read(navIndexProvider.notifier);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         body: _pages[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
+          selectedItemColor: Colors.amber,
+          backgroundColor: const Color.fromARGB(255, 19, 19, 19),
+          unselectedItemColor: Colors.white,
           onTap: (index) => navNotifier.changeTab(index),
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month),
+              icon: Icon(Icons.home_rounded),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_month_rounded),
               label: 'calender',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.folder), label: 'folders'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.folder_rounded),
+              label: 'folders',
+            ),
           ],
         ),
       ),
