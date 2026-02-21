@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -6,12 +7,28 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent,
+      backgroundColor: Colors.blueAccent,
       appBar: AppBar(
-        title: const Text('Journel'),
-        backgroundColor: Colors.deepPurple,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Journel',
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            SizedBox(width: 40),
+            Text(
+              'saturday, february 21, 2026',
+              style: TextStyle(
+                fontSize: 16,
+                color: const Color.fromARGB(255, 176, 176, 176),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 137, 250),
       ),
-      body: const Center(child: Text('No notes for today!')),
+      body: ListView(children: [NoteCard(), NoteCard()]),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         onPressed: () {},
