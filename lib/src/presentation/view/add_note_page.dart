@@ -28,7 +28,11 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
-        title: const Text("Add Note", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Add Note",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
+        foregroundColor: Colors.white,
         backgroundColor: const Color.fromARGB(255, 19, 19, 19),
         elevation: 0,
       ),
