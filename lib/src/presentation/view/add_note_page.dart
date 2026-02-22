@@ -68,7 +68,6 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                     onTap: () {
                       setState(() {
                         selectedEmojiIndex = index;
-                        print("tapped $selectedEmojiIndex");
                       });
                     },
                     child: Icon(
@@ -87,6 +86,10 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
               // Title text field
               TextField(
                 controller: titleController,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
                 decoration: InputDecoration(
                   hintText: 'Give this entry a title...',
                   hintStyle: TextStyle(color: Colors.grey[500], fontSize: 15),
@@ -108,6 +111,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
               // Content field
               TextField(
                 controller: contentController,
+                style: TextStyle(color: Colors.white),
                 maxLines: 8,
                 decoration: InputDecoration(
                   hintText: "What's on your mind today?",

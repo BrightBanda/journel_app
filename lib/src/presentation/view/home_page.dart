@@ -42,7 +42,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(width: 20),
             Text(
-              'Saturday, February 21, 2026',
+              DateTime.now().toString(),
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[400],
