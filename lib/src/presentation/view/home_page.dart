@@ -47,23 +47,17 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: ListView(
-          children: const [
-            NoteCard(
-              detals:
-                  "this is the day i rembered nothing makes sense even this thing",
+        child: ListView.builder(
+          itemCount: notesProvider.length,
+          itemBuilder: (BuildContext context, int index) {
+            final note = notesProvider[index];
+            return NoteCard(
+              title: note.title,
               moodIcon: Icon(Icons.emoji_emotions, color: Colors.amber),
-              title: "Project Idea",
-              folder: "Personal",
-            ),
-            NoteCard(
-              detals:
-                  "this is the day i rembered nothing makes sense even this thing",
-              moodIcon: Icon(Icons.emoji_emotions, color: Colors.amber),
-              title: "Flutter projects",
-              folder: "Projects",
-            ),
-          ],
+              detals: note.content,
+              folder: "folder",
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -74,6 +74,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               // Title text field
               TextField(
+                controller: titleController,
                 decoration: InputDecoration(
                   hintText: 'Give this entry a title...',
                   hintStyle: TextStyle(color: Colors.grey[500], fontSize: 15),
@@ -94,6 +95,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               // Content field
               TextField(
+                controller: contentController,
                 maxLines: 8,
                 decoration: InputDecoration(
                   hintText: "What's on your mind today?",
@@ -148,6 +150,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       title: titleController.text,
                       content: contentController.text,
                     );
+                    Navigator.pop(context);
                   },
                   child: Text("Save Entry"),
                 ),
