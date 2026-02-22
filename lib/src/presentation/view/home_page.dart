@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journel_new/src/presentation/view/add_note_page.dart';
+import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
   Widget build(BuildContext context) {
+    final notesProvider = ref.watch(addNoteProvider);
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(

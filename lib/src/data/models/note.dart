@@ -3,7 +3,7 @@ class Note {
   final String content;
   final DateTime createdAt;
   final int? mood;
-  final int id;
+  final String id;
 
   Note({
     required this.title,
