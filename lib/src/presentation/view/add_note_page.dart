@@ -13,6 +13,7 @@ class AddNotePage extends ConsumerStatefulWidget {
 class _AddNotePageState extends ConsumerState<AddNotePage> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  int selectedEmojiIndex = 0;
 
   @override
   void dispose() {
@@ -23,6 +24,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
   Widget build(BuildContext context) {
     final AddNoteProvider = ref.read(addNoteProvider.notifier);
+
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
@@ -61,13 +63,23 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Icon(Icons.emoji_emotions, size: 36, color: Colors.amber),
-                  Icon(Icons.emoji_emotions, size: 36, color: Colors.amber),
-                  Icon(Icons.emoji_emotions, size: 36, color: Colors.amber),
-                  Icon(Icons.emoji_emotions, size: 36, color: Colors.amber),
-                  Icon(Icons.emoji_emotions, size: 36, color: Colors.amber),
-                ],
+                children: List.generate(5, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedEmojiIndex = index;
+                        print("tapped $selectedEmojiIndex");
+                      });
+                    },
+                    child: Icon(
+                      Icons.emoji_emotions,
+                      size: 36,
+                      color: selectedEmojiIndex == index
+                          ? Colors.amber
+                          : Colors.grey[500],
+                    ),
+                  );
+                }),
               ),
 
               const SizedBox(height: 24),
@@ -149,6 +161,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                     AddNoteProvider.addNote(
                       title: titleController.text,
                       content: contentController.text,
+                      moodIndex: selectedEmojiIndex,
                     );
                     Navigator.pop(context);
                   },

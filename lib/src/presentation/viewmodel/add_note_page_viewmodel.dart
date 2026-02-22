@@ -7,10 +7,15 @@ class AddNotePageViewmodel extends Notifier<List<Note>> {
     return [];
   }
 
-  void addNote({required String title, required String content}) {
+  void addNote({
+    required String title,
+    required String content,
+    required int moodIndex,
+  }) {
     final newNote = Note(
       title: title,
       content: content,
+      mood: moodIndex,
       createdAt: DateTime.now(),
       id: DateTime.now().toString(),
     );

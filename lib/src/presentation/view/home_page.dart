@@ -15,6 +15,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final notesProvider = ref.watch(addNoteProvider);
+    final moodIcons = [
+      Icons.emoji_emotions,
+      Icons.emoji_events,
+      Icons.sentiment_neutral,
+      Icons.sentiment_dissatisfied,
+      Icons.sentiment_very_dissatisfied,
+    ];
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
@@ -53,7 +60,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             final note = notesProvider[index];
             return NoteCard(
               title: note.title,
-              moodIcon: Icon(Icons.emoji_emotions, color: Colors.amber),
+              moodIcon: Icon(moodIcons[note.mood], color: Colors.amber),
               detals: note.content,
               folder: "folder",
             );
