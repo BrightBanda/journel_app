@@ -22,8 +22,12 @@ class AddNotePageViewmodel extends Notifier<List<Note>> {
 
     state = [...state, newNote];
   }
+
+  void deleteNote(Note note) {
+    state = state.where((n) => n.id != note.id).toList();
+  }
 }
 
-final addNoteProvider = NotifierProvider<AddNotePageViewmodel, List<Note>>(
+final noteProvider = NotifierProvider<AddNotePageViewmodel, List<Note>>(
   AddNotePageViewmodel.new,
 );

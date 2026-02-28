@@ -25,7 +25,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
   }
 
   Widget build(BuildContext context) {
-    final AddNoteProvider = ref.read(addNoteProvider.notifier);
+    final AddNoteProvider = ref.read(noteProvider.notifier);
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
@@ -67,13 +67,25 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                 color: const Color(0xFF2A2A2A),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: SelectableText(
-                widget.note.content,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  height: 1.5,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "12 sept 2026",
+                    style: TextStyle(
+                      color: const Color.fromARGB(255, 138, 138, 138),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SelectableText(
+                    widget.note.content,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      height: 1.5,
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -92,12 +104,12 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                     vertical: 14,
                   ),
                 ),
-                onPressed: () {},
-                //   AddNoteProvider.deleteNote(
-                //     widget.note,
-                //   ); // assuming you have delete
-                //   Navigator.pop(context);
-                // },
+                onPressed: () {
+                  AddNoteProvider.deleteNote(
+                    widget.note,
+                  ); // assuming you have delete
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   "Delete Entry",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

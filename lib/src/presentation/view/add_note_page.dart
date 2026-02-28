@@ -23,7 +23,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
   }
 
   Widget build(BuildContext context) {
-    final AddNoteProvider = ref.read(addNoteProvider.notifier);
+    final AddNoteProvider = ref.read(noteProvider.notifier);
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),

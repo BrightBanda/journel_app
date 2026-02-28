@@ -15,7 +15,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final notesProvider = ref.watch(addNoteProvider);
+    final notesProvider = ref.watch(noteProvider);
     final moodIcons = [
       Icons.emoji_emotions,
       Icons.emoji_events,
