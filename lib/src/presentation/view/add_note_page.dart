@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/folder_btn.dart';
 
 class AddNotePage extends ConsumerStatefulWidget {
@@ -24,6 +25,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
   Widget build(BuildContext context) {
     final AddNoteProvider = ref.read(noteProvider.notifier);
+    final folderNot = ref.watch(folderProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
@@ -140,18 +142,15 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               const SizedBox(height: 14),
 
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: const [
-                    FolderBtn(title: "Projects"),
-                    SizedBox(width: 12),
-                    FolderBtn(title: "School"),
-                    SizedBox(width: 12),
-                    FolderBtn(title: "Work"),
-                    SizedBox(width: 12),
-                    FolderBtn(title: "Other"),
-                  ],
+              Container(
+                height: 40,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: folderNot.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final folder = folderNot[index];
+                    return FolderBtn(title: folder.name);
+                  },
                 ),
               ),
 
