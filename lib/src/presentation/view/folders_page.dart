@@ -3,13 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/add_folder_dialogBox.dart';
+import 'package:journel_new/src/utils/customWidgets/folder_card.dart';
 
 class FoldersPage extends ConsumerWidget {
   const FoldersPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final folderProv = ref.read(folderProvider.notifier);
+    final folderProv = ref.watch(folderProvider.notifier);
+    final folderNot = ref.watch(folderProvider);
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
@@ -23,7 +25,13 @@ class FoldersPage extends ConsumerWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       ),
-      body: const Center(child: Text('No folders yet!')),
+      body: ListView.builder(
+        itemCount: folderNot.length,
+        itemBuilder: (BuildContext context, int index) {
+          final folder = folderNot[index];
+          return FolderCard(name: folder.name);
+        },
+      ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -35,6 +43,7 @@ class FoldersPage extends ConsumerWidget {
           );
           if (newFolder != null) {
             folderProv.addFolder(name: newFolder.name, id: newFolder.id);
+            print("Folder name: ${newFolder.name} + Id: ${newFolder.id}");
           }
         },
         shape: CircleBorder(),
