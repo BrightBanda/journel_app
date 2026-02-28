@@ -15,6 +15,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
   int selectedEmojiIndex = 0;
+  String? selectedFolderId;
 
   @override
   void dispose() {
@@ -143,6 +144,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               const SizedBox(height: 14),
 
+              //folder buttons
               Container(
                 height: 40,
                 child: ListView.builder(
@@ -150,7 +152,16 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                   itemCount: folderNot.length,
                   itemBuilder: (BuildContext context, int index) {
                     final folder = folderNot[index];
-                    return FolderBtn(title: folder.name);
+                    final isSelected = selectedFolderId == folder.id;
+                    return FolderBtn(
+                      title: folder.name,
+                      isSelected: isSelected,
+                      onPressed: () {
+                        setState(() {
+                          selectedFolderId = folder.id;
+                        });
+                      },
+                    );
                   },
                 ),
               ),
@@ -170,6 +181,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       title: titleController.text,
                       content: contentController.text,
                       moodIndex: selectedEmojiIndex,
+                      folderId: selectedFolderId ?? "default",
                     );
                     titleController.clear();
                     contentController.clear();

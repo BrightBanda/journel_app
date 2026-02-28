@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 
 class FolderBtn extends StatelessWidget {
   final String title;
-  const FolderBtn({super.key, required this.title});
+  final bool isSelected;
+  final void Function()? onPressed;
+  const FolderBtn({
+    super.key,
+    required this.title,
+    required this.isSelected,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +18,10 @@ class FolderBtn extends StatelessWidget {
       child: Container(
         height: 35,
         decoration: BoxDecoration(
-          color: Colors.amberAccent,
+          color: isSelected ? Colors.amberAccent : Colors.grey,
           borderRadius: BorderRadius.circular(25),
         ),
-        child: MaterialButton(onPressed: () {}, child: Text(title)),
+        child: MaterialButton(onPressed: onPressed, child: Text(title)),
       ),
     );
   }

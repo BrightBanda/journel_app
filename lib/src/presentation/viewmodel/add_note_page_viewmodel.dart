@@ -11,11 +11,13 @@ class AddNotePageViewmodel extends Notifier<List<Note>> {
     required String title,
     required String content,
     required int moodIndex,
+    required String folderId,
   }) {
     final newNote = Note(
       title: title,
       content: content,
       mood: moodIndex,
+      folderId: folderId,
       createdAt: DateTime.now(),
       id: DateTime.now().toString(),
     );

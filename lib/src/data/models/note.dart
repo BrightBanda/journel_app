@@ -4,6 +4,7 @@ class Note {
   final DateTime createdAt;
   final int mood;
   final String id;
+  final String folderId;
 
   Note({
     required this.title,
@@ -11,5 +12,6 @@ class Note {
     required this.createdAt,
     required this.mood,
     required this.id,
+    required this.folderId,
   });
 }

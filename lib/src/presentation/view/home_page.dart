@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -16,6 +18,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final notesProvider = ref.watch(noteProvider);
+    final folderNot = ref.watch(folderProvider);
     final moodIcons = [
       Icons.emoji_emotions,
       Icons.emoji_events,
@@ -70,7 +73,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 title: note.title,
                 moodIcon: Icon(moodIcons[note.mood], color: Colors.amber),
                 detals: note.content,
-                folder: "folder",
+                folder: folderNot
+                    .firstWhere(
+                      (folder) => folder.id == note.folderId,
+                      orElse: () => Folder(id: "default", name: "Default"),
+                    )
+                    .name,
               ),
             );
           },
