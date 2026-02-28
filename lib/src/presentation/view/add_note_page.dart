@@ -171,6 +171,8 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       content: contentController.text,
                       moodIndex: selectedEmojiIndex,
                     );
+                    titleController.clear();
+                    contentController.clear();
                     Navigator.pop(context);
                   },
                   child: Text("Save Entry"),

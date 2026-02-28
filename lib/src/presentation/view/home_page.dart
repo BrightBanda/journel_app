@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journel_new/src/presentation/view/add_note_page.dart';
+import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
@@ -58,11 +59,19 @@ class _HomePageState extends ConsumerState<HomePage> {
           itemCount: notesProvider.length,
           itemBuilder: (BuildContext context, int index) {
             final note = notesProvider[index];
-            return NoteCard(
-              title: note.title,
-              moodIcon: Icon(moodIcons[note.mood], color: Colors.amber),
-              detals: note.content,
-              folder: "folder",
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ViewNotePage(note: note)),
+                );
+              },
+              child: NoteCard(
+                title: note.title,
+                moodIcon: Icon(moodIcons[note.mood], color: Colors.amber),
+                detals: note.content,
+                folder: "folder",
+              ),
             );
           },
         ),

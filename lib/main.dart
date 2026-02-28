@@ -4,6 +4,7 @@ import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/presentation/view/calender_page.dart';
 import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/view/home_page.dart';
+import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 
 void main() {
