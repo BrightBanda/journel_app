@@ -31,7 +31,10 @@ class FolderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // mood
-                Icon(Icons.emoji_emotions, color: Colors.yellow, size: 30),
+                Text(
+                  "updated 2 days ago",
+                  style: TextStyle(fontSize: 13, color: Colors.grey[400]),
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,

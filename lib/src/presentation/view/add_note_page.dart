@@ -91,6 +91,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               // Title text field
               TextField(
+                maxLength: 30,
                 controller: titleController,
                 style: TextStyle(
                   color: Colors.white,

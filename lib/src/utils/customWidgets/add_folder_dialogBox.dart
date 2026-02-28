@@ -13,7 +13,8 @@ class AddFolderDialogbox extends StatelessWidget {
         style: TextStyle(fontSize: 15, color: Colors.black),
       ),
       content: TextField(
-        style: TextStyle(color: Colors.white),
+        maxLength: 30,
+        style: TextStyle(color: Colors.black),
         decoration: InputDecoration(labelText: 'folder Name'),
         onChanged: (value) {
           name = value;
