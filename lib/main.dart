@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journel_new/src/data/database/database_helper.dart';
 import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/presentation/view/calender_page.dart';
 import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/view/home_page.dart';
-import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
+//import 'package:sqflite/sqflite.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DatabaseHelper.instance.database;
+  DatabaseHelper.instance.insertFolder(id: 'general', name: 'General');
+  final folders = await DatabaseHelper.instance.getAllFolders();
+  print(folders);
   runApp(ProviderScope(child: const MyApp()));
 }
 
