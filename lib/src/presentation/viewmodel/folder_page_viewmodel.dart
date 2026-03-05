@@ -1,19 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journel_new/src/data/database/database_helper.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 
-class FolderPageViewmodel extends Notifier<List<Folder>> {
+class FolderPageViewmodel extends AsyncNotifier<List<Folder>> {
   @override
-  build() {
-    return [];
+  Future<List<Folder>> build() async {
+    final foldermaps = await DatabaseHelper.instance.getAllFolders();
+    final folders = foldermaps
+        .map((map) => Folder(id: map["id"], name: map["name"]))
+        .toList();
+    return folders;
   }
 
-  void addFolder({required String name, required String id}) {
-    final newFolder = Folder(id: DateTime.now().toString(), name: name);
+  Future<void> addFolder({required String name, required String id}) async {
+    final newFolder = Folder(id: id, name: name);
+    await DatabaseHelper.instance.insertFolder(id: id, name: name);
 
-    state = [...state, newFolder];
+    state = AsyncValue.data([...state.value!, newFolder]);
   }
 }
 
-final folderProvider = NotifierProvider<FolderPageViewmodel, List<Folder>>(
+final folderProvider = AsyncNotifierProvider<FolderPageViewmodel, List<Folder>>(
   FolderPageViewmodel.new,
 );

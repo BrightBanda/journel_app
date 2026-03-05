@@ -25,12 +25,18 @@ class FoldersPage extends ConsumerWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       ),
-      body: ListView.builder(
-        itemCount: folderNot.length,
-        itemBuilder: (BuildContext context, int index) {
-          final folder = folderNot[index];
-          return FolderCard(name: folder.name);
+      body: folderNot.when(
+        data: (folders) {
+          return ListView.builder(
+            itemCount: folders.length,
+            itemBuilder: (BuildContext context, int index) {
+              final folder = folders[index];
+              return FolderCard(name: folder.name);
+            },
+          );
         },
+        error: (err, _) => Center(child: Text("Error: $err")),
+        loading: () => CircularProgressIndicator(),
       ),
 
       floatingActionButton: FloatingActionButton(

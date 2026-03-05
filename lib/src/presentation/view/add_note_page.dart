@@ -147,22 +147,28 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
               //folder buttons
               Container(
                 height: 40,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: folderNot.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final folder = folderNot[index];
-                    final isSelected = selectedFolderId == folder.id;
-                    return FolderBtn(
-                      title: folder.name,
-                      isSelected: isSelected,
-                      onPressed: () {
-                        setState(() {
-                          selectedFolderId = folder.id;
-                        });
+                child: folderNot.when(
+                  data: (folders) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: folders.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final folder = folders[index];
+                        final isSelected = selectedFolderId == folder.id;
+                        return FolderBtn(
+                          title: folder.name,
+                          isSelected: isSelected,
+                          onPressed: () {
+                            setState(() {
+                              selectedFolderId = folder.id;
+                            });
+                          },
+                        );
                       },
                     );
                   },
+                  error: (error, _) => Center(child: Text("Error: $error")),
+                  loading: () => CircularProgressIndicator(),
                 ),
               ),
 
