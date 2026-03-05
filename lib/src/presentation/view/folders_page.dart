@@ -31,7 +31,12 @@ class FoldersPage extends ConsumerWidget {
             itemCount: folders.length,
             itemBuilder: (BuildContext context, int index) {
               final folder = folders[index];
-              return FolderCard(name: folder.name);
+              return FolderCard(
+                name: folder.name,
+                onPressed: (context) async {
+                  await ref.read(folderProvider.notifier).deleteFolder(folder);
+                },
+              );
             },
           );
         },

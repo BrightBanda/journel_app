@@ -53,4 +53,9 @@ class DatabaseHelper {
     final result = await db.query('folders');
     return result;
   }
+
+  Future<void> deleteFolderById(String id) async {
+    final db = await instance.database;
+    db.delete('folders', where: 'id = ?', whereArgs: [id]);
+  }
 }
