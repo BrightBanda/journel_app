@@ -62,7 +62,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           data: (notes) {
             return folderNot.when(
               data: (folders) {
-                ListView.builder(
+                return ListView.builder(
                   itemCount: notes.length,
                   itemBuilder: (BuildContext context, int index) {
                     final note = notes[index];
@@ -98,8 +98,10 @@ class _HomePageState extends ConsumerState<HomePage> {
               loading: () => CircularProgressIndicator(),
             );
           },
-          loading: () => CircularProgressIndicator(),
-          error: (error, _) => Center(child: Text("Error: $error")),
+          loading: () => Center(child: CircularProgressIndicator()),
+          error: (error, _) => Center(
+            child: Text("Error: $error", style: TextStyle(color: Colors.white)),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

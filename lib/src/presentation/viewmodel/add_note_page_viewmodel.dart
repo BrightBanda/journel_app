@@ -4,8 +4,22 @@ import 'package:journel_new/src/data/models/note.dart';
 
 class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
   @override
-  build() {
-    return [];
+  Future<List<Note>> build() async {
+    final noteMaps = await DatabaseHelper.instance.getAllNotes();
+    final notes = noteMaps
+        .map(
+          (map) => Note(
+            title: map['title'],
+            content: map['content'],
+            createdAt: map['created_at'],
+            mood: map['mood'],
+            id: map['id'],
+            folderId: map['folder_id'],
+          ),
+        )
+        .toList();
+
+    return notes;
   }
 
   void addNote({
@@ -24,7 +38,8 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
       createdAt: createdAt,
       id: id,
     );
-    state = AsyncValue.data([...state.value!, newNote]);
+    final currentState = state.value ?? [];
+    state = AsyncValue.data([...currentState, newNote]);
     DatabaseHelper.instance.insertNote(
       id: id,
       title: title,
@@ -33,6 +48,7 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
       folder_id: folderId,
       created_at: createdAt,
     );
+    ref.invalidateSelf();
   }
 
   void deleteNote(Note note) {
