@@ -188,6 +188,8 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       content: contentController.text,
                       moodIndex: selectedEmojiIndex,
                       folderId: selectedFolderId ?? "default",
+                      id: DateTime.now().toString(),
+                      createdAt: DateTime.now().toString(),
                     );
                     titleController.clear();
                     contentController.clear();

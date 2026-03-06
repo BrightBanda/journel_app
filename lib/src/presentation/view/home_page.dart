@@ -58,34 +58,44 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: folderNot.when(
-          data: (folders) {
-            return ListView.builder(
-              itemCount: notesProvider.length,
-              itemBuilder: (BuildContext context, int index) {
-                final note = notesProvider[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ViewNotePage(note: note),
+        child: notesProvider.when(
+          data: (notes) {
+            return folderNot.when(
+              data: (folders) {
+                ListView.builder(
+                  itemCount: notes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final note = notes[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ViewNotePage(note: note),
+                          ),
+                        );
+                      },
+                      child: NoteCard(
+                        title: note.title,
+                        moodIcon: Icon(
+                          moodIcons[note.mood],
+                          color: Colors.amber,
+                        ),
+                        detals: note.content,
+                        folder: folders
+                            .firstWhere(
+                              (folder) => folder.id == note.folderId,
+                              orElse: () =>
+                                  Folder(id: "default", name: "Default"),
+                            )
+                            .name,
                       ),
                     );
                   },
-                  child: NoteCard(
-                    title: note.title,
-                    moodIcon: Icon(moodIcons[note.mood], color: Colors.amber),
-                    detals: note.content,
-                    folder: folders
-                        .firstWhere(
-                          (folder) => folder.id == note.folderId,
-                          orElse: () => Folder(id: "default", name: "Default"),
-                        )
-                        .name,
-                  ),
                 );
               },
+              error: (error, _) => Center(child: Text("Error: $error")),
+              loading: () => CircularProgressIndicator(),
             );
           },
           loading: () => CircularProgressIndicator(),

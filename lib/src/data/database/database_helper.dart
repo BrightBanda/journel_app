@@ -58,4 +58,30 @@ class DatabaseHelper {
     final db = await instance.database;
     db.delete('folders', where: 'id = ?', whereArgs: [id]);
   }
+  //
+
+  Future<void> insertNote({
+    required String id,
+    required String title,
+    required String content,
+    required int moodIndex,
+    required String folder_id,
+    required String created_at,
+  }) async {
+    final db = await instance.database;
+    await db.insert('notes', {
+      'id': id,
+      'title': title,
+      'content': content,
+      'mood': moodIndex,
+      'folder_id': folder_id,
+      'created_at': created_at,
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllNotes() async {
+    final db = await instance.database;
+    final result = db.query('notes');
+    return result;
+  }
 }

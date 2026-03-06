@@ -1,7 +1,7 @@
 class Note {
   final String title;
   final String content;
-  final DateTime createdAt;
+  final String createdAt;
   final int mood;
   final String id;
   final String folderId;
