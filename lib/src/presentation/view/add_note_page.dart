@@ -190,10 +190,12 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       moodIndex: selectedEmojiIndex,
                       folderId: selectedFolderId ?? "default",
                       id: DateTime.now().toString(),
-                      dateCreated: DateFormat.yMMMMEEEEd().format(
-                        DateTime.now(),
-                      ),
-                      timeCreated: DateFormat("HH:mm a").format(DateTime.now()),
+                      dateCreated: DateFormat.yMMMMEEEEd()
+                          .format(DateTime.now())
+                          .toString(),
+                      timeCreated: DateFormat(
+                        "HH:mm a",
+                      ).format(DateTime.now()).toString(),
                     );
                     titleController.clear();
                     contentController.clear();

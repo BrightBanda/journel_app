@@ -78,9 +78,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       },
                       child: NoteCard(
                         title: note.title,
-                        timecreated: DateFormat(
-                          "HH:mm a",
-                        ).format(DateTime.now()),
+                        timecreated: note.timecreated,
                         moodIcon: Icon(
                           moodIcons[note.mood],
                           color: Colors.amber,

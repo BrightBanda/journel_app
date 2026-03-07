@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/database/database_helper.dart';
 import 'package:journel_new/src/data/models/note.dart';
 
