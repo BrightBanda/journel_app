@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/data/models/note.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/folder_btn.dart';
 
 class ViewNotePage extends ConsumerStatefulWidget {
@@ -25,11 +27,13 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
   }
 
   Widget build(BuildContext context) {
-    final AddNoteProvider = ref.read(noteProvider.notifier);
+    final addNoteProvider = ref.read(noteProvider.notifier);
+    final folderProv = ref.watch(folderProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Text(
           widget.note.title,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -38,25 +42,10 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Mood emoji row
-            Row(
-              children: [
-                Icon(Icons.emoji_emotions, color: Colors.amber, size: 36),
-                const SizedBox(width: 12),
-                Text(
-                  "note folder",
-                  style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-
             const SizedBox(height: 24),
 
             // Content box
@@ -65,16 +54,42 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: const Color(0xFF2A2A2A),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(13),
               ),
+              //date + folder name
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "12 sept 2026",
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 138, 138, 138),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //date
+                      Text(
+                        "12 sept 2026",
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 138, 138, 138),
+                        ),
+                      ),
+                      //folder name
+                      folderProv.when(
+                        data: (folders) {
+                          final folder = folders.firstWhere(
+                            (f) => f.id == widget.note.folderId,
+                            orElse: () => Folder(id: '', name: 'unknown'),
+                          );
+                          return Text(
+                            folder.name,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blueAccent,
+                            ),
+                          );
+                        },
+                        error: (error, _) => Text("Error: $error"),
+                        loading: () => CircularProgressIndicator(),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 10),
                   SelectableText(
@@ -105,7 +120,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                   ),
                 ),
                 onPressed: () {
-                  AddNoteProvider.deleteNote(
+                  addNoteProvider.deleteNote(
                     widget.note,
                   ); // assuming you have delete
                   Navigator.pop(context);

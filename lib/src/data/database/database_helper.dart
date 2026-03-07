@@ -84,4 +84,9 @@ class DatabaseHelper {
     final result = db.query('notes');
     return result;
   }
+
+  Future<void> deleteNoteById(String id) async {
+    final db = await instance.database;
+    db.delete('notes', where: 'id = ?', whereArgs: [id]);
+  }
 }

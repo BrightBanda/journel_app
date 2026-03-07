@@ -11,14 +11,6 @@ import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
-  DatabaseHelper.instance.insertNote(
-    id: 'id',
-    title: 'new',
-    content: 'this is a note',
-    moodIndex: 2,
-    folder_id: '23',
-    created_at: 'monday',
-  );
   final notes = await DatabaseHelper.instance.getAllNotes();
   print(notes);
   runApp(ProviderScope(child: const MyApp()));

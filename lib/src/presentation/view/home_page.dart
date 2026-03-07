@@ -98,7 +98,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               loading: () => CircularProgressIndicator(),
             );
           },
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () =>
+              Center(child: CircularProgressIndicator(color: Colors.white)),
           error: (error, _) => Center(
             child: Text("Error: $error", style: TextStyle(color: Colors.white)),
           ),

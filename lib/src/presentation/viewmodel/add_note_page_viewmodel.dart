@@ -55,6 +55,7 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
     state = AsyncValue.data(
       state.value!.where((n) => n.id != note.id).toList(),
     );
+    DatabaseHelper.instance.deleteNoteById(note.id);
   }
 }
 
