@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
+import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 
-class FolderCard extends StatelessWidget {
+class FolderCard extends ConsumerWidget {
   final String name;
+  final String folderId;
   final Future<void> Function(BuildContext)? onPressed;
-  const FolderCard({super.key, required this.name, required this.onPressed});
+  const FolderCard({
+    super.key,
+    required this.name,
+    required this.folderId,
+    required this.onPressed,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notesProv = ref.watch(noteProvider);
     return Padding(
       padding: const EdgeInsets.only(bottom: 12, left: 4, right: 4),
       child: Slidable(
@@ -58,14 +68,22 @@ class FolderCard extends StatelessWidget {
                       color: Colors.blueAccent.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(
-                      //number of entries
-                      "2 :Entries",
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.blueAccent,
-                      ),
+                    child: notesProv.when(
+                      data: (notes) {
+                        final notesCount = notes
+                            .where((n) => n.folderId == folderId)
+                            .length;
+                        return Text(
+                          "Entries: ${notesCount.toString()}",
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blueAccent,
+                          ),
+                        );
+                      },
+                      error: (error, _) => Center(child: Text("Error: $error")),
+                      loading: () => Center(child: CircularProgressIndicator()),
                     ),
                   ),
                 ],
@@ -87,26 +105,37 @@ class FolderCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // Details
-              Text(
-                "Feb 28: making a new game",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[400],
-                  height: 1.4,
-                ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                "Sept 12: downloading anime",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[400],
-                  height: 1.4,
-                ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+              // Preview notes titles
+              notesProv.when(
+                data: (notes) {
+                  final notesInFolder = notes
+                      .where((n) => n.folderId == folderId)
+                      .toList();
+                  notesInFolder.sort((a, b) => b.id.compareTo(a.id));
+                  final prevNotes = notesInFolder.take(2).toList();
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: prevNotes.map((note) {
+                      final parseDate = DateFormat.yMMMMEEEEd().parse(
+                        note.dateCreated,
+                      );
+                      final previewDate = DateFormat("MMM d").format(parseDate);
+                      return Text(
+                        "$previewDate: ${note.title}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[400],
+                          height: 1.4,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    }).toList(),
+                  );
+                },
+                error: (error, _) => Text("Error: $error"),
+                loading: () => Center(child: CircularProgressIndicator()),
               ),
             ],
           ),

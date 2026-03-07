@@ -40,6 +40,7 @@ class FoldersPage extends ConsumerWidget {
                 final folder = folders[index];
                 return FolderCard(
                   name: folder.name,
+                  folderId: folder.id,
                   onPressed: (context) async {
                     await ref
                         .read(folderProvider.notifier)
