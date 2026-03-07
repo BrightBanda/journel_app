@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/folder_btn.dart';
@@ -50,7 +51,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               // Today's date
               Text(
-                "Saturday, February 21, 2026",
+                DateFormat.yMMMMEEEEd().format(DateTime.now()),
                 style: TextStyle(color: Colors.grey[400], fontSize: 14),
               ),
 
@@ -189,7 +190,10 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       moodIndex: selectedEmojiIndex,
                       folderId: selectedFolderId ?? "default",
                       id: DateTime.now().toString(),
-                      createdAt: DateTime.now().toString(),
+                      dateCreated: DateFormat.yMMMMEEEEd().format(
+                        DateTime.now(),
+                      ),
+                      timeCreated: DateFormat("HH:mm a").format(DateTime.now()),
                     );
                     titleController.clear();
                     contentController.clear();

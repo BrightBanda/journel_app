@@ -65,7 +65,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                     children: [
                       //date
                       Text(
-                        "12 sept 2026",
+                        widget.note.dateCreated,
                         style: TextStyle(
                           color: const Color.fromARGB(255, 138, 138, 138),
                         ),

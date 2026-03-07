@@ -11,7 +11,8 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
           (map) => Note(
             title: map['title'],
             content: map['content'],
-            createdAt: map['created_at'],
+            dateCreated: map['date_created'],
+            timecreated: map['time_created'],
             mood: map['mood'],
             id: map['id'],
             folderId: map['folder_id'],
@@ -28,14 +29,16 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
     required int moodIndex,
     required String folderId,
     required String id,
-    required String createdAt,
+    required String dateCreated,
+    required String timeCreated,
   }) {
     final newNote = Note(
       title: title,
       content: content,
       mood: moodIndex,
       folderId: folderId,
-      createdAt: createdAt,
+      dateCreated: dateCreated,
+      timecreated: timeCreated,
       id: id,
     );
     final currentState = state.value ?? [];
@@ -46,7 +49,8 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
       content: content,
       moodIndex: moodIndex,
       folder_id: folderId,
-      created_at: createdAt,
+      date_Created: dateCreated,
+      time_Created: timeCreated,
     );
     ref.invalidateSelf();
   }

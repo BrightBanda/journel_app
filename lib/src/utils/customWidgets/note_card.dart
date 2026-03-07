@@ -5,12 +5,14 @@ class NoteCard extends StatelessWidget {
   final Icon moodIcon;
   final String detals;
   final String folder;
+  final String timecreated;
   const NoteCard({
     super.key,
     required this.title,
     required this.moodIcon,
     required this.detals,
     required this.folder,
+    required this.timecreated,
   });
 
   @override
@@ -63,16 +65,29 @@ class NoteCard extends StatelessWidget {
 
             const SizedBox(height: 14),
 
-            // Title
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            // Title + creation time
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  timecreated,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[400],
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
 
             const SizedBox(height: 8),

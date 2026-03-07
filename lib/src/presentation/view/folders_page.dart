@@ -27,17 +27,27 @@ class FoldersPage extends ConsumerWidget {
       ),
       body: folderNot.when(
         data: (folders) {
-          return ListView.builder(
-            itemCount: folders.length,
-            itemBuilder: (BuildContext context, int index) {
-              final folder = folders[index];
-              return FolderCard(
-                name: folder.name,
-                onPressed: (context) async {
-                  await ref.read(folderProvider.notifier).deleteFolder(folder);
-                },
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.only(
+              right: 8,
+              left: 8,
+              top: 8,
+              bottom: 6,
+            ),
+            child: ListView.builder(
+              itemCount: folders.length,
+              itemBuilder: (BuildContext context, int index) {
+                final folder = folders[index];
+                return FolderCard(
+                  name: folder.name,
+                  onPressed: (context) async {
+                    await ref
+                        .read(folderProvider.notifier)
+                        .deleteFolder(folder);
+                  },
+                );
+              },
+            ),
           );
         },
         error: (err, _) => Center(child: Text("Error: $err")),
@@ -45,6 +55,7 @@ class FoldersPage extends ConsumerWidget {
       ),
 
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 74, 71, 71),
         onPressed: () async {
           final newFolder = await showDialog<Folder>(
             context: context,
@@ -54,11 +65,10 @@ class FoldersPage extends ConsumerWidget {
           );
           if (newFolder != null) {
             folderProv.addFolder(name: newFolder.name, id: newFolder.id);
-            print("Folder name: ${newFolder.name} + Id: ${newFolder.id}");
           }
         },
         shape: CircleBorder(),
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.yellow),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 //import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
@@ -46,7 +47,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(width: 20),
             Text(
-              DateTime.now().toString(),
+              DateFormat.yMMMMEEEEd().format(DateTime.now()),
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[400],
@@ -77,6 +78,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                       },
                       child: NoteCard(
                         title: note.title,
+                        timecreated: DateFormat(
+                          "HH:mm a",
+                        ).format(DateTime.now()),
                         moodIcon: Icon(
                           moodIcons[note.mood],
                           color: Colors.amber,
@@ -114,6 +118,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         },
         child: const Icon(Icons.add, size: 26, color: Colors.yellow),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
