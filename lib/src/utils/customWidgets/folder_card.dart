@@ -8,6 +8,7 @@ class FolderCard extends ConsumerWidget {
   final String name;
   final String folderId;
   final Future<void> Function(BuildContext)? onPressed;
+
   const FolderCard({
     super.key,
     required this.name,
@@ -48,96 +49,78 @@ class FolderCard extends ConsumerWidget {
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Emoji + folder row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: notesProv.when(
+            data: (notes) {
+              final notesInFolder = notes
+                  .where((n) => n.folderId == folderId)
+                  .toList();
+              notesInFolder.sort((a, b) => b.id.compareTo(a.id));
+
+              // Days since latest entry
+              final days = notesInFolder.isNotEmpty
+                  ? DateTime.now()
+                        .difference(
+                          DateFormat.yMMMMEEEEd().parse(
+                            notesInFolder[0].dateCreated,
+                          ),
+                        )
+                        .inDays
+                  : 0;
+
+              final prevNotes = notesInFolder.take(2).toList();
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // mood
-                  Text(
-                    "updated 2 days ago",
-                    style: TextStyle(fontSize: 13, color: Colors.grey[400]),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.blueAccent.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: notesProv.when(
-                      data: (notes) {
-                        final notesCount = notes
-                            .where((n) => n.folderId == folderId)
-                            .length;
-                        return Text(
-                          "Entries: ${notesCount.toString()}",
+                  // Top row: updated time + entries count
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "updated $days days ago",
+                        style: TextStyle(fontSize: 13, color: Colors.grey[400]),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          "Entries: ${notesInFolder.length}",
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                             color: Colors.blueAccent,
                           ),
-                        );
-                      },
-                      error: (error, _) => Center(child: Text("Error: $error")),
-                      loading: () => Center(child: CircularProgressIndicator()),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 14),
-
-              // Title
-              Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-
-              const SizedBox(height: 8),
-
-              // Preview notes titles
-              notesProv.when(
-                data: (notes) {
-                  final notesInFolder = notes
-                      .where((n) => n.folderId == folderId)
-                      .toList();
-                  notesInFolder.sort((a, b) => b.id.compareTo(a.id));
-                  final prevNotes = notesInFolder.take(2).toList();
-                  //final bool isNoteAvailable = notesInFolder.isNotEmpty;
-                  if (prevNotes.isEmpty) {
-                    return Text(
-                      "Notes not available",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[400],
-                        height: 1.4,
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    );
-                  } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: prevNotes.map((note) {
-                        final parseDate = DateFormat.yMMMMEEEEd().parse(
-                          note.dateCreated,
-                        );
-                        final previewDate = DateFormat(
-                          "MMM d",
-                        ).format(parseDate);
-                        return Text(
-                          "$previewDate: ${note.title}",
+                    ],
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // Folder title
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Preview entries
+                  prevNotes.isEmpty
+                      ? Text(
+                          "Notes not available",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[400],
@@ -145,15 +128,30 @@ class FolderCard extends ConsumerWidget {
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                        );
-                      }).toList(),
-                    );
-                  }
-                },
-                error: (error, _) => Text("Error: $error"),
-                loading: () => Center(child: CircularProgressIndicator()),
-              ),
-            ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: prevNotes.map((note) {
+                            final previewDate = DateFormat("MMM d").format(
+                              DateFormat.yMMMMEEEEd().parse(note.dateCreated),
+                            );
+                            return Text(
+                              "$previewDate: ${note.title}",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[400],
+                                height: 1.4,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            );
+                          }).toList(),
+                        ),
+                ],
+              );
+            },
+            error: (error, _) => Center(child: Text("Error: $error")),
+            loading: () => Center(child: CircularProgressIndicator()),
           ),
         ),
       ),
