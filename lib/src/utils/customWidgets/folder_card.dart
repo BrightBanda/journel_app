@@ -18,6 +18,7 @@ class FolderCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notesProv = ref.watch(noteProvider);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12, left: 4, right: 4),
       child: Slidable(
@@ -113,26 +114,41 @@ class FolderCard extends ConsumerWidget {
                       .toList();
                   notesInFolder.sort((a, b) => b.id.compareTo(a.id));
                   final prevNotes = notesInFolder.take(2).toList();
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: prevNotes.map((note) {
-                      final parseDate = DateFormat.yMMMMEEEEd().parse(
-                        note.dateCreated,
-                      );
-                      final previewDate = DateFormat("MMM d").format(parseDate);
-                      return Text(
-                        "$previewDate: ${note.title}",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[400],
-                          height: 1.4,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      );
-                    }).toList(),
-                  );
+                  //final bool isNoteAvailable = notesInFolder.isNotEmpty;
+                  if (prevNotes.isEmpty) {
+                    return Text(
+                      "Notes not available",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[400],
+                        height: 1.4,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: prevNotes.map((note) {
+                        final parseDate = DateFormat.yMMMMEEEEd().parse(
+                          note.dateCreated,
+                        );
+                        final previewDate = DateFormat(
+                          "MMM d",
+                        ).format(parseDate);
+                        return Text(
+                          "$previewDate: ${note.title}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[400],
+                            height: 1.4,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        );
+                      }).toList(),
+                    );
+                  }
                 },
                 error: (error, _) => Text("Error: $error"),
                 loading: () => Center(child: CircularProgressIndicator()),
