@@ -27,29 +27,36 @@ class FoldersPage extends ConsumerWidget {
       ),
       body: folderNot.when(
         data: (folders) {
-          return Padding(
-            padding: const EdgeInsets.only(
-              right: 8,
-              left: 8,
-              top: 8,
-              bottom: 6,
-            ),
-            child: ListView.builder(
-              itemCount: folders.length,
-              itemBuilder: (BuildContext context, int index) {
-                final folder = folders[index];
-                return FolderCard(
-                  name: folder.name,
-                  folderId: folder.id,
-                  onPressed: (context) async {
-                    await ref
-                        .read(folderProvider.notifier)
-                        .deleteFolder(folder);
-                  },
+          return folders.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                    right: 8,
+                    left: 8,
+                    top: 8,
+                    bottom: 6,
+                  ),
+                  child: ListView.builder(
+                    itemCount: folders.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final folder = folders[index];
+                      return FolderCard(
+                        name: folder.name,
+                        folderId: folder.id,
+                        onPressed: (context) async {
+                          await ref
+                              .read(folderProvider.notifier)
+                              .deleteFolder(folder);
+                        },
+                      );
+                    },
+                  ),
+                )
+              : Center(
+                  child: Text(
+                    "No folders here",
+                    style: TextStyle(color: Colors.amber),
+                  ),
                 );
-              },
-            ),
-          );
         },
         error: (err, _) => Center(child: Text("Error: $err")),
         loading: () => CircularProgressIndicator(),
