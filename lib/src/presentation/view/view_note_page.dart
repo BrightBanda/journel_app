@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/data/models/note.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
@@ -65,7 +66,9 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                     children: [
                       //date
                       Text(
-                        widget.note.dateCreated,
+                        DateFormat.yMMMMEEEEd().format(
+                          DateTime.parse(widget.note.dateCreated),
+                        ),
                         style: TextStyle(
                           color: const Color.fromARGB(255, 138, 138, 138),
                         ),

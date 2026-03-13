@@ -92,7 +92,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           timecreated: formatedTime,
                           moodIcon: Icon(
                             moodIcons[note.mood],
-                            color: Colors.amber,
+                            color: Colors.yellow,
                           ),
                           detals: note.content,
                           folder: folders

@@ -35,7 +35,7 @@ class MyApp extends ConsumerWidget {
         body: _pages[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
-          selectedItemColor: Colors.amber,
+          selectedItemColor: Colors.yellow,
           backgroundColor: const Color.fromARGB(255, 19, 19, 19),
           unselectedItemColor: Colors.white,
           onTap: (index) => navNotifier.changeTab(index),
