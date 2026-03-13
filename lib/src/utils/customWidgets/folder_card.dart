@@ -57,13 +57,18 @@ class FolderCard extends ConsumerWidget {
               notesInFolder.sort((a, b) => b.id.compareTo(a.id));
 
               // Days since latest entry
-              final parsedDate = notesInFolder.isNotEmpty
+              /*final parsedDate = notesInFolder.isNotEmpty
                   ? DateFormat.yMMMMEEEEd().parse(notesInFolder[0].dateCreated)
-                  : DateTime.now();
+                  : DateTime.now();*/
+              final parsedDate = DateTime.parse(notesInFolder[0].dateCreated);
               final difference = DateTime.now().difference(parsedDate);
+
               String lastUpdatedText;
               if (difference.inMinutes < 60) {
                 lastUpdatedText = "updated ${difference.inMinutes} minutes ago";
+              }
+              if (difference.inMinutes < 1) {
+                lastUpdatedText = "updated less than minute ago";
               } else if (difference.inHours < 24) {
                 lastUpdatedText = "updated ${difference.inHours} hours ago";
               } else {
@@ -135,9 +140,12 @@ class FolderCard extends ConsumerWidget {
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: prevNotes.map((note) {
-                            final previewDate = DateFormat("MMM d").format(
-                              DateFormat.yMMMMEEEEd().parse(note.dateCreated),
+                            final parsedDate = DateTime.parse(
+                              notesInFolder[0].dateCreated,
                             );
+                            final previewDate = DateFormat(
+                              "MMM d",
+                            ).format(parsedDate);
                             return Text(
                               "$previewDate: ${note.title}",
                               style: TextStyle(

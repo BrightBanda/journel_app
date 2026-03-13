@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/database/database_helper.dart';
 import 'package:journel_new/src/data/models/note.dart';
 
@@ -13,7 +12,6 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
             title: map['title'],
             content: map['content'],
             dateCreated: map['date_created'],
-            timecreated: map['time_created'],
             mood: map['mood'],
             id: map['id'],
             folderId: map['folder_id'],
@@ -31,7 +29,6 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
     required String folderId,
     required String id,
     required String dateCreated,
-    required String timeCreated,
   }) {
     final newNote = Note(
       title: title,
@@ -39,7 +36,6 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
       mood: moodIndex,
       folderId: folderId,
       dateCreated: dateCreated,
-      timecreated: timeCreated,
       id: id,
     );
     final currentState = state.value ?? [];
@@ -51,7 +47,6 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
       moodIndex: moodIndex,
       folder_id: folderId,
       date_Created: dateCreated,
-      time_Created: timeCreated,
     );
     ref.invalidateSelf();
   }

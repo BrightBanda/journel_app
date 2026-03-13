@@ -32,7 +32,6 @@ class DatabaseHelper {
           mood INTEGER,
           folder_id TEXT,
           date_created TEXT,
-          time_created TEXT,
           FOREIGN KEY (folder_id) REFERENCES folders(id)
         )
    ''');
@@ -68,7 +67,6 @@ class DatabaseHelper {
     required int moodIndex,
     required String folder_id,
     required String date_Created,
-    required String time_Created,
   }) async {
     final db = await instance.database;
     await db.insert('notes', {
@@ -78,7 +76,6 @@ class DatabaseHelper {
       'mood': moodIndex,
       'folder_id': folder_id,
       'date_created': date_Created,
-      'time_created': time_Created,
     }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 

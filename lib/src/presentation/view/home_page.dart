@@ -73,6 +73,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     itemCount: notes.length,
                     itemBuilder: (BuildContext context, int index) {
                       final note = notes[index];
+                      final parsedDateTime = DateTime.parse(note.dateCreated);
+                      final formatedTime = DateFormat(
+                        "HH:mm",
+                      ).format(parsedDateTime).toString();
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -82,9 +86,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           );
                         },
+
                         child: NoteCard(
                           title: note.title,
-                          timecreated: note.timecreated,
+                          timecreated: formatedTime,
                           moodIcon: Icon(
                             moodIcons[note.mood],
                             color: Colors.amber,
