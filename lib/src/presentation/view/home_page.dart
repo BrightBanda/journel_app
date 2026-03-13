@@ -63,37 +63,44 @@ class _HomePageState extends ConsumerState<HomePage> {
           data: (notes) {
             return folderNot.when(
               data: (folders) {
-                return ListView.builder(
-                  itemCount: notes.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final note = notes[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ViewNotePage(note: note),
-                          ),
-                        );
-                      },
-                      child: NoteCard(
-                        title: note.title,
-                        timecreated: note.timecreated,
-                        moodIcon: Icon(
-                          moodIcons[note.mood],
-                          color: Colors.amber,
-                        ),
-                        detals: note.content,
-                        folder: folders
-                            .firstWhere(
-                              (folder) => folder.id == note.folderId,
-                              orElse: () =>
-                                  Folder(id: "default", name: "Default"),
-                            )
-                            .name,
-                      ),
-                    );
+                return RefreshIndicator(
+                  color: Colors.yellow,
+                  backgroundColor: const Color(0xFF1E1E1E),
+                  onRefresh: () async {
+                    await ref.refresh(noteProvider.future);
                   },
+                  child: ListView.builder(
+                    itemCount: notes.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final note = notes[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ViewNotePage(note: note),
+                            ),
+                          );
+                        },
+                        child: NoteCard(
+                          title: note.title,
+                          timecreated: note.timecreated,
+                          moodIcon: Icon(
+                            moodIcons[note.mood],
+                            color: Colors.amber,
+                          ),
+                          detals: note.content,
+                          folder: folders
+                              .firstWhere(
+                                (folder) => folder.id == note.folderId,
+                                orElse: () =>
+                                    Folder(id: "default", name: "Default"),
+                              )
+                              .name,
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
               error: (error, _) => Center(child: Text("Error: $error")),

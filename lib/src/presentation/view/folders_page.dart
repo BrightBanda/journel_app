@@ -28,27 +28,35 @@ class FoldersPage extends ConsumerWidget {
       body: folderNot.when(
         data: (folders) {
           return folders.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 8,
-                    left: 8,
-                    top: 8,
-                    bottom: 6,
-                  ),
-                  child: ListView.builder(
-                    itemCount: folders.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final folder = folders[index];
-                      return FolderCard(
-                        name: folder.name,
-                        folderId: folder.id,
-                        onPressed: (context) async {
-                          await ref
-                              .read(folderProvider.notifier)
-                              .deleteFolder(folder);
-                        },
-                      );
-                    },
+              ? RefreshIndicator(
+                  color: Colors.yellow,
+                  backgroundColor: const Color(0xFF1E1E1E),
+                  onRefresh: () async {
+                    await ref.refresh(folderProvider.future);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      right: 8,
+                      left: 8,
+                      top: 8,
+                      bottom: 6,
+                    ),
+                    child: ListView.builder(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemCount: folders.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final folder = folders[index];
+                        return FolderCard(
+                          name: folder.name,
+                          folderId: folder.id,
+                          onPressed: (context) async {
+                            await ref
+                                .read(folderProvider.notifier)
+                                .deleteFolder(folder);
+                          },
+                        );
+                      },
+                    ),
                   ),
                 )
               : Center(
