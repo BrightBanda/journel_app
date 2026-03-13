@@ -61,7 +61,7 @@ class FoldersPage extends ConsumerWidget {
                 )
               : Center(
                   child: Text(
-                    "No folders here",
+                    "Click + to create a new folder",
                     style: TextStyle(color: Colors.white),
                   ),
                 );

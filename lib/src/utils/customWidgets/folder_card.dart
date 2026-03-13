@@ -55,7 +55,9 @@ class FolderCard extends ConsumerWidget {
                   .where((n) => n.folderId == folderId)
                   .toList();
               notesInFolder.sort((a, b) => b.id.compareTo(a.id));
-              final parsedDate = DateTime.parse(notesInFolder[0].dateCreated);
+              final parsedDate = notesInFolder.isNotEmpty
+                  ? DateTime.parse(notesInFolder[0].dateCreated)
+                  : DateTime.now();
               final difference = DateTime.now().difference(parsedDate);
 
               String lastUpdatedText;

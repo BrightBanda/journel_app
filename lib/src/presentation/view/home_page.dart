@@ -69,43 +69,54 @@ class _HomePageState extends ConsumerState<HomePage> {
                   onRefresh: () async {
                     await ref.refresh(noteProvider.future);
                   },
-                  child: ListView.builder(
-                    itemCount: notes.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final note = notes[index];
-                      final parsedDateTime = DateTime.parse(note.dateCreated);
-                      final formatedTime = DateFormat(
-                        "HH:mm",
-                      ).format(parsedDateTime).toString();
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => ViewNotePage(note: note),
-                            ),
-                          );
-                        },
+                  child: notes.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: notes.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final note = notes[index];
+                            final parsedDateTime = DateTime.parse(
+                              note.dateCreated,
+                            );
+                            final formatedTime = DateFormat(
+                              "HH:mm",
+                            ).format(parsedDateTime).toString();
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ViewNotePage(note: note),
+                                  ),
+                                );
+                              },
 
-                        child: NoteCard(
-                          title: note.title,
-                          timecreated: formatedTime,
-                          moodIcon: Icon(
-                            moodIcons[note.mood],
-                            color: Colors.yellow,
+                              child: NoteCard(
+                                title: note.title,
+                                timecreated: formatedTime,
+                                moodIcon: Icon(
+                                  moodIcons[note.mood],
+                                  color: Colors.yellow,
+                                ),
+                                detals: note.content,
+                                folder: folders
+                                    .firstWhere(
+                                      (folder) => folder.id == note.folderId,
+                                      orElse: () => Folder(
+                                        id: "default",
+                                        name: "Default",
+                                      ),
+                                    )
+                                    .name,
+                              ),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Text(
+                            "Click + to add an entry",
+                            style: TextStyle(color: Colors.white),
                           ),
-                          detals: note.content,
-                          folder: folders
-                              .firstWhere(
-                                (folder) => folder.id == note.folderId,
-                                orElse: () =>
-                                    Folder(id: "default", name: "Default"),
-                              )
-                              .name,
                         ),
-                      );
-                    },
-                  ),
                 );
               },
               error: (error, _) => Center(child: Text("Error: $error")),
