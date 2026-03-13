@@ -55,20 +55,17 @@ class FolderCard extends ConsumerWidget {
                   .where((n) => n.folderId == folderId)
                   .toList();
               notesInFolder.sort((a, b) => b.id.compareTo(a.id));
-
-              // Days since latest entry
-              /*final parsedDate = notesInFolder.isNotEmpty
-                  ? DateFormat.yMMMMEEEEd().parse(notesInFolder[0].dateCreated)
-                  : DateTime.now();*/
               final parsedDate = DateTime.parse(notesInFolder[0].dateCreated);
               final difference = DateTime.now().difference(parsedDate);
 
               String lastUpdatedText;
               if (difference.inMinutes < 60) {
-                lastUpdatedText = "updated ${difference.inMinutes} minutes ago";
-              }
-              if (difference.inMinutes < 1) {
-                lastUpdatedText = "updated less than minute ago";
+                if (difference.inMinutes < 1) {
+                  lastUpdatedText = "updated less than minute ago";
+                } else {
+                  lastUpdatedText =
+                      "updated ${difference.inMinutes} minutes ago";
+                }
               } else if (difference.inHours < 24) {
                 lastUpdatedText = "updated ${difference.inHours} hours ago";
               } else {
