@@ -54,7 +54,7 @@ class FoldersPage extends ConsumerWidget {
               : Center(
                   child: Text(
                     "No folders here",
-                    style: TextStyle(color: Colors.amber),
+                    style: TextStyle(color: Colors.white),
                   ),
                 );
         },
