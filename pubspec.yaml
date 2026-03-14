@@ -40,6 +40,7 @@ dependencies:
   flutter_slidable: ^4.0.3
   intl: ^0.20.2
   table_calendar: ^3.2.0
+  google_nav_bar: ^5.0.7
 
 dev_dependencies:
   flutter_test:
