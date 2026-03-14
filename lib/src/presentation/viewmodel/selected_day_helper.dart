@@ -1,9 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 
-final selectedDateProvider = Provider<DateTime>((ref) {
-  return DateTime.now();
-});
+class SelectedDayHelper extends Notifier<DateTime> {
+  @override
+  DateTime build() {
+    return DateTime.now();
+  }
+
+  void setDate(DateTime date) {
+    state = date;
+  }
+}
+
+final selectedDateProvider = NotifierProvider<SelectedDayHelper, DateTime>(
+  SelectedDayHelper.new,
+);
 
 //filters notes based on day selected
 final filteredNotesByDateProvider = Provider((ref) {

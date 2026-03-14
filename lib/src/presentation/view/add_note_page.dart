@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/selected_day_helper.dart';
 import 'package:journel_new/src/utils/customWidgets/folder_btn.dart';
 
 class AddNotePage extends ConsumerStatefulWidget {
@@ -28,6 +29,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
   Widget build(BuildContext context) {
     final AddNoteProvider = ref.read(noteProvider.notifier);
     final folderNot = ref.watch(folderProvider);
+    final selectedDate = ref.watch(selectedDateProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
@@ -190,7 +192,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       moodIndex: selectedEmojiIndex,
                       folderId: selectedFolderId ?? "default",
                       id: DateTime.now().toString(),
-                      dateCreated: DateTime.now().toIso8601String(),
+                      dateCreated: selectedDate.toIso8601String(),
                     );
                     titleController.clear();
                     contentController.clear();

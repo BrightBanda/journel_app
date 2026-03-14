@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/models/folder.dart';
+import 'package:journel_new/src/presentation/view/calender_page.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/selected_day_helper.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
@@ -31,6 +33,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 19, 19, 19),
+        foregroundColor: Colors.white,
         elevation: 0,
         titleSpacing: 16,
         title: Row(
@@ -46,12 +49,15 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             ),
             const SizedBox(width: 20),
-            Text(
-              DateFormat.yMMMMEEEEd().format(DateTime.now()),
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[400],
-                fontWeight: FontWeight.w400,
+            GestureDetector(
+              onTap: () => ref.read(navIndexProvider.notifier).changeTab(1),
+              child: Text(
+                DateFormat.yMMMMEEEEd().format(ref.watch(selectedDateProvider)),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[400],
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ],
@@ -112,9 +118,21 @@ class _HomePageState extends ConsumerState<HomePage> {
                           },
                         )
                       : Center(
-                          child: Text(
-                            "Click + to add an entry",
-                            style: TextStyle(color: Colors.white),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "No entries for this day",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              Text(
+                                "Click + to add an entry",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
                 );
