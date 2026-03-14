@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journel_new/src/data/database/database_helper.dart';
 import 'package:journel_new/src/data/models/folder.dart';
-import 'package:journel_new/src/data/models/note.dart';
 
 class FolderPageViewmodel extends AsyncNotifier<List<Folder>> {
   @override

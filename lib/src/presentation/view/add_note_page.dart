@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/selected_day_helper.dart';
 import 'package:journel_new/src/utils/customWidgets/folder_btn.dart';
 
@@ -137,42 +139,64 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                 ),
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 32),
 
               // Folders label
               const Text(
                 "Save to folder",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-
-              const SizedBox(height: 14),
-
-              //folder buttons
-              Container(
-                height: 40,
-                child: folderNot.when(
-                  data: (folders) {
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: folders.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final folder = folders[index];
-                        final isSelected = selectedFolderId == folder.id;
-                        return FolderBtn(
-                          title: folder.name,
-                          isSelected: isSelected,
-                          onPressed: () {
-                            setState(() {
-                              selectedFolderId = folder.id;
-                            });
-                          },
-                        );
-                      },
-                    );
-                  },
-                  error: (error, _) => Center(child: Text("Error: $error")),
-                  loading: () => CircularProgressIndicator(),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
+              ),
+              //folder buttons
+              folderNot.when(
+                data: (data) {
+                  return data.isNotEmpty
+                      ? Container(
+                          height: 40,
+                          child: folderNot.when(
+                            data: (folders) {
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: folders.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final folder = folders[index];
+                                  final isSelected =
+                                      selectedFolderId == folder.id;
+                                  return FolderBtn(
+                                    title: folder.name,
+                                    isSelected: isSelected,
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedFolderId = folder.id;
+                                      });
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            error: (error, _) =>
+                                Center(child: Text("Error: $error")),
+                            loading: () => CircularProgressIndicator(),
+                          ),
+                        )
+                      : TextButton(
+                          child: Text(
+                            "no folders yet, click to create",
+                            style: TextStyle(color: Colors.redAccent),
+                          ),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (builder) => const FoldersPage(),
+                            ),
+                          ),
+                        );
+                },
+                error: (error, _) => Text("Error: $error"),
+                loading: () => CircularProgressIndicator(),
               ),
 
               const SizedBox(height: 16),
@@ -186,6 +210,19 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                 width: 260,
                 child: MaterialButton(
                   onPressed: () {
+                    if (titleController.text.isEmpty ||
+                        contentController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Please make sure the title and content fields have been filled",
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      return;
+                    }
                     AddNoteProvider.addNote(
                       title: titleController.text,
                       content: contentController.text,
