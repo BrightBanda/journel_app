@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/models/folder.dart';
-//import 'package:journel_new/src/presentation/view/add_note_page.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/selected_day_helper.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -18,7 +18,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final notesProvider = ref.watch(noteProvider);
+    final notesProvider = ref.watch(filteredNotesByDateProvider);
     final folderNot = ref.watch(folderProvider);
     final moodIcons = [
       Icons.emoji_emotions,
