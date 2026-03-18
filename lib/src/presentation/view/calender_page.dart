@@ -28,52 +28,62 @@ class CalenderPage extends ConsumerWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       ),
-      body: TableCalendar(
-        focusedDay: selectedDate,
-        firstDay: DateTime(2020),
-        lastDay: DateTime(2077),
-
-        selectedDayPredicate: (day) {
-          return isSameDay(day, selectedDate);
-        },
-
-        eventLoader: (day) {
-          final dateOnly = DateTime(day.year, day.month, day.day);
-          return eventDates.contains(dateOnly) ? [true] : [];
-        },
-        onDaySelected: (selectedDay, focusedDay) {
-          ref.read(selectedDateProvider.notifier).setDate(selectedDay);
-          ref.read(navIndexProvider.notifier).changeTab(0);
-        },
-
-        calendarStyle: const CalendarStyle(
-          todayTextStyle: TextStyle(color: Colors.black),
-          todayDecoration: BoxDecoration(
-            color: Color.fromARGB(255, 91, 138, 220),
-            shape: BoxShape.circle,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        child: Container(
+          height: 360,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 19, 19, 19),
+            borderRadius: BorderRadius.circular(12),
           ),
-          selectedDecoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-          ),
-          markerDecoration: BoxDecoration(
-            color: Colors.amber,
-            shape: BoxShape.circle,
-          ),
-          outsideDaysVisible: false,
-          defaultTextStyle: TextStyle(color: Colors.white),
-          weekendTextStyle: TextStyle(color: Colors.redAccent),
-        ),
+          child: TableCalendar(
+            focusedDay: selectedDate,
+            firstDay: DateTime(2020),
+            lastDay: DateTime(2077),
 
-        headerStyle: const HeaderStyle(
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            selectedDayPredicate: (day) {
+              return isSameDay(day, selectedDate);
+            },
+
+            eventLoader: (day) {
+              final dateOnly = DateTime(day.year, day.month, day.day);
+              return eventDates.contains(dateOnly) ? [true] : [];
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              ref.read(selectedDateProvider.notifier).setDate(selectedDay);
+              ref.read(navIndexProvider.notifier).changeTab(0);
+            },
+
+            calendarStyle: const CalendarStyle(
+              todayTextStyle: TextStyle(color: Colors.black),
+              todayDecoration: BoxDecoration(
+                color: Color.fromARGB(255, 91, 138, 220),
+                shape: BoxShape.circle,
+              ),
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
+              ),
+              markerDecoration: BoxDecoration(
+                color: Colors.amber,
+                shape: BoxShape.circle,
+              ),
+              outsideDaysVisible: false,
+              defaultTextStyle: TextStyle(color: Colors.white),
+              weekendTextStyle: TextStyle(color: Colors.redAccent),
+            ),
+
+            headerStyle: const HeaderStyle(
+              titleTextStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              formatButtonVisible: false,
+              leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
+              rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
+            ),
           ),
-          formatButtonVisible: false,
-          leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
-          rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
         ),
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/models/folder.dart';
-import 'package:journel_new/src/presentation/view/calender_page.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
@@ -44,7 +43,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(width: 20),
             GestureDetector(
-              onTap: () => ref.read(navIndexProvider.notifier).changeTab(2),
+              onTap: () => ref.read(navIndexProvider.notifier).changeTab(1),
               child: Text(
                 DateFormat.yMMMMEEEEd().format(ref.watch(selectedDateProvider)),
                 style: TextStyle(

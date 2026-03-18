@@ -23,9 +23,10 @@ class MyApp extends ConsumerWidget {
 
   static const List<Widget> _pages = [
     HomePage(),
-    AddNotePage(),
     CalenderPage(),
+    AddNotePage(),
     FoldersPage(),
+    SettingsPage(),
   ];
 
   @override
@@ -37,20 +38,19 @@ class MyApp extends ConsumerWidget {
       home: Scaffold(
         body: _pages[currentIndex],
         bottomNavigationBar: GNav(
-          gap: 4,
           selectedIndex: currentIndex,
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 8, vertical: 20),
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 6, vertical: 15),
           backgroundColor: const Color.fromARGB(255, 19, 19, 19),
           color: Colors.white,
           activeColor: Colors.yellow,
           textStyle: TextStyle(color: Colors.white),
-          rippleColor: Colors.yellowAccent,
           onTabChange: (index) => navNotifier.changeTab(index),
           tabs: [
-            GButton(icon: Icons.home_rounded, text: "Home"),
-            GButton(icon: Icons.add, text: "Add", iconSize: 30),
-            GButton(icon: Icons.calendar_month_rounded, text: "Calender"),
-            GButton(icon: Icons.folder_rounded, text: "Folders"),
+            GButton(icon: Icons.home_rounded), //home
+            GButton(icon: Icons.calendar_month_rounded), //calender
+            GButton(icon: Icons.add, iconSize: 45), //add
+            GButton(icon: Icons.folder_rounded), //folder
+            GButton(icon: Icons.settings_rounded), //settings
           ],
         ),
       ),
