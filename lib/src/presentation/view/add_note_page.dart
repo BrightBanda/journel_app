@@ -119,7 +119,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                     vertical: 14,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(6),
                     borderSide: BorderSide.none,
                   ),
                 ),
@@ -139,7 +139,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                   fillColor: const Color(0xFF2A2A2A),
                   contentPadding: const EdgeInsets.all(16),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(6),
                     borderSide: BorderSide.none,
                   ),
                 ),
