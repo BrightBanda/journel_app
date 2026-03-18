@@ -229,11 +229,13 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       moodIndex: selectedEmojiIndex,
                       folderId: selectedFolderId ?? "default",
                       id: DateTime.now().toString(),
-                      dateCreated: selectedDate.toIso8601String(),
+                      dateCreated: DateTime.now().toIso8601String(),
                     );
+                    print("selectedDate $selectedDate");
+                    print("date created ${DateTime.now().toIso8601String()}");
                     titleController.clear();
                     contentController.clear();
-                    Navigator.pop(context);
+                    ref.read(navIndexProvider.notifier).changeTab(0);
                   },
                   child: Text("Save Entry"),
                 ),

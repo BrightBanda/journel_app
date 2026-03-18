@@ -15,6 +15,7 @@ class FoldersPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: const Text(
           'Folders',
           style: TextStyle(

@@ -50,7 +50,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(width: 20),
             GestureDetector(
-              onTap: () => ref.read(navIndexProvider.notifier).changeTab(1),
+              onTap: () => ref.read(navIndexProvider.notifier).changeTab(2),
               child: Text(
                 DateFormat.yMMMMEEEEd().format(ref.watch(selectedDateProvider)),
                 style: TextStyle(
@@ -148,16 +148,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 74, 71, 71),
-        shape: const CircleBorder(),
-        elevation: 4,
-        onPressed: () {
-          Navigator.pushNamed(context, "/AddNotePage");
-        },
-        child: const Icon(Icons.add, size: 26, color: Colors.yellow),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
