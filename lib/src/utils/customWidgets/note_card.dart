@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NoteCard extends StatelessWidget {
   final String title;
-  final Icon moodIcon;
+  final Text moodIcon;
   final String detals;
   final String folder;
   final String timecreated;

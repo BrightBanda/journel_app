@@ -22,13 +22,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final notesProvider = ref.watch(filteredNotesByDateProvider);
     final folderNot = ref.watch(folderProvider);
-    final moodIcons = [
-      Icons.emoji_emotions,
-      Icons.emoji_events,
-      Icons.sentiment_neutral,
-      Icons.sentiment_dissatisfied,
-      Icons.sentiment_very_dissatisfied,
-    ];
+    final moodIcons = ["😄", "🙂", "😐", "😔", "😫"];
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
@@ -99,9 +93,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               child: NoteCard(
                                 title: note.title,
                                 timecreated: formatedTime,
-                                moodIcon: Icon(
+                                moodIcon: Text(
                                   moodIcons[note.mood],
-                                  color: Colors.yellow,
+                                  style: TextStyle(fontSize: 26),
                                 ),
                                 detals: note.content,
                                 folder: folders

@@ -31,7 +31,8 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
   Widget build(BuildContext context) {
     final AddNoteProvider = ref.read(noteProvider.notifier);
     final folderNot = ref.watch(folderProvider);
-    final selectedDate = ref.watch(selectedDateProvider);
+    //final selectedDate = ref.watch(selectedDateProvider);
+    final moods = ["😄", "🙂", "😐", "😔", "😫"];
 
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
@@ -75,19 +76,24 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(5, (index) {
+                children: List.generate(moods.length, (index) {
+                  final isSelected = selectedEmojiIndex == index;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedEmojiIndex = index;
                       });
                     },
-                    child: Icon(
-                      Icons.emoji_emotions,
-                      size: 36,
-                      color: selectedEmojiIndex == index
-                          ? Colors.amber
-                          : Colors.grey[500],
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 200),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: isSelected
+                            ? Colors.yellow.withValues(alpha: 0.2)
+                            : Colors.transparent,
+                      ),
+                      child: Text(moods[index], style: TextStyle(fontSize: 28)),
                     ),
                   );
                 }),
@@ -231,8 +237,6 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       id: DateTime.now().toString(),
                       dateCreated: DateTime.now().toIso8601String(),
                     );
-                    print("selectedDate $selectedDate");
-                    print("date created ${DateTime.now().toIso8601String()}");
                     titleController.clear();
                     contentController.clear();
                     ref.read(navIndexProvider.notifier).changeTab(0);

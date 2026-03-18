@@ -38,6 +38,7 @@ class MyApp extends ConsumerWidget {
         body: _pages[currentIndex],
         bottomNavigationBar: GNav(
           gap: 4,
+          selectedIndex: currentIndex,
           padding: EdgeInsetsGeometry.symmetric(horizontal: 8, vertical: 20),
           backgroundColor: const Color.fromARGB(255, 19, 19, 19),
           color: Colors.white,
@@ -52,33 +53,6 @@ class MyApp extends ConsumerWidget {
             GButton(icon: Icons.folder_rounded, text: "Folders"),
           ],
         ),
-
-        /*bottomNavigationBar: BottomNavigationBar(
-          currentIndex: currentIndex,
-          selectedItemColor: Colors.yellow,
-          backgroundColor: const Color.fromARGB(255, 19, 19, 19),
-          unselectedItemColor: Colors.white,
-          onTap: (index) => navNotifier.changeTab(index),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_rounded),
-              label: 'calender',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Settings'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.folder_rounded),
-              label: 'folders',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_rounded),
-              label: 'Settings',
-            ),
-          ],
-        ),*/
       ),
 
       initialRoute: "/",
