@@ -193,7 +193,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                             height: kLineHeight / kFontSize,
                           ),
                           decoration: InputDecoration(
-                            hintText: "Dear Diary,\n\n",
+                            hintText: "Whats on your mind?,\n\n",
                             hintStyle: GoogleFonts.caveat(
                               fontSize: kFontSize,
                               color: Colors.grey[700],
