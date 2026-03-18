@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 
@@ -21,57 +22,53 @@ class FolderCard extends ConsumerWidget {
     final notesProv = ref.watch(noteProvider);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12, left: 4, right: 4),
+      padding: const EdgeInsets.only(bottom: 10, right: 4),
       child: Slidable(
         endActionPane: ActionPane(
-          motion: BehindMotion(),
+          motion: const BehindMotion(),
           children: [
             SlidableAction(
               onPressed: onPressed,
-              icon: Icons.delete,
-              label: "delete",
+              icon: Icons.delete_outline,
+              label: "Delete",
               backgroundColor: Colors.redAccent,
+              borderRadius: BorderRadius.circular(6),
             ),
           ],
         ),
         child: Container(
-          padding: const EdgeInsets.all(16),
           width: double.infinity,
-          height: 170,
           decoration: BoxDecoration(
             color: const Color(0xFF2A2A2A),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.25),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
+            borderRadius: BorderRadius.circular(6),
+            border: Border(
+              left: BorderSide(
+                color: const Color.fromARGB(179, 212, 169, 83),
+                width: 2,
               ),
-            ],
+            ),
           ),
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
           child: notesProv.when(
             data: (notes) {
-              final notesInFolder = notes
-                  .where((n) => n.folderId == folderId)
-                  .toList();
-              notesInFolder.sort((a, b) => b.id.compareTo(a.id));
+              final notesInFolder =
+                  notes.where((n) => n.folderId == folderId).toList()
+                    ..sort((a, b) => b.id.compareTo(a.id));
+
               final parsedDate = notesInFolder.isNotEmpty
                   ? DateTime.parse(notesInFolder[0].dateCreated)
                   : DateTime.now();
               final difference = DateTime.now().difference(parsedDate);
 
               String lastUpdatedText;
-              if (difference.inMinutes < 60) {
-                if (difference.inMinutes < 1) {
-                  lastUpdatedText = "updated less than minute ago";
-                } else {
-                  lastUpdatedText =
-                      "updated ${difference.inMinutes} minutes ago";
-                }
+              if (difference.inMinutes < 1) {
+                lastUpdatedText = "just now";
+              } else if (difference.inMinutes < 60) {
+                lastUpdatedText = "${difference.inMinutes}m ago";
               } else if (difference.inHours < 24) {
-                lastUpdatedText = "updated ${difference.inHours} hours ago";
+                lastUpdatedText = "${difference.inHours}h ago";
               } else {
-                lastUpdatedText = "updated ${difference.inDays} days ago";
+                lastUpdatedText = "${difference.inDays}d ago";
               }
 
               final prevNotes = notesInFolder.take(2).toList();
@@ -79,89 +76,89 @@ class FolderCard extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Top row: updated time + entries count
+                  // Folder name + entry count
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        lastUpdatedText,
-                        style: TextStyle(fontSize: 13, color: Colors.grey[400]),
+                        name,
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFFE8DCC8),
+                        ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          "Entries: ${notesInFolder.length}",
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blueAccent,
-                          ),
+                      Text(
+                        "${notesInFolder.length} ${notesInFolder.length == 1 ? 'entry' : 'entries'}",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11,
+                          color: Colors.grey[600],
                         ),
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 16),
 
-                  // Folder title
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Preview entries
+                  // Preview notes
                   prevNotes.isEmpty
                       ? Text(
-                          "Notes not available",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[400],
-                            height: 1.4,
+                          "No entries yet",
+                          style: GoogleFonts.caveat(
+                            fontSize: 16,
+                            color: Colors.grey[700],
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         )
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: prevNotes.map((note) {
-                            final parsedDate = DateTime.parse(
-                              notesInFolder[0].dateCreated,
-                            );
-                            final previewDate = DateFormat(
+                            final date = DateFormat(
                               "MMM d",
-                            ).format(parsedDate);
-                            return Text(
-                              "$previewDate: ${note.title}",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[400],
-                                height: 1.4,
+                            ).format(DateTime.parse(note.dateCreated));
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 3),
+                              child: Text(
+                                "$date  ·  ${note.title}",
+                                style: GoogleFonts.caveat(
+                                  fontSize: 16,
+                                  color: Colors.grey[600],
+                                  height: 1.4,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             );
                           }).toList(),
                         ),
+
+                  const SizedBox(height: 10),
+
+                  // Last updated
+                  Text(
+                    "Updated: $lastUpdatedText",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 10,
+                      color: Colors.grey[700],
+                      letterSpacing: 0.3,
+                    ),
+                  ),
                 ],
               );
             },
-            error: (error, _) => Center(child: Text("Error: $error")),
-            loading: () => Center(child: CircularProgressIndicator()),
+            error: (error, _) => Text(
+              "Error: $error",
+              style: GoogleFonts.dmSans(color: Colors.redAccent, fontSize: 12),
+            ),
+            loading: () => const SizedBox(
+              height: 40,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFFD4A853),
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
           ),
         ),
       ),

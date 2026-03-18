@@ -29,7 +29,7 @@ class NoteCard extends StatelessWidget {
           border: Border(
             left: BorderSide(
               color: const Color.fromARGB(179, 212, 169, 83),
-              width: 3,
+              width: 2,
             ),
           ),
         ),
