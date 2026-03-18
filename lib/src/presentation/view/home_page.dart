@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
@@ -116,14 +117,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                             children: [
                               Text(
                                 "No entries for this day",
-                                style: TextStyle(
+                                style: GoogleFonts.caveat(
                                   color: Colors.white,
-                                  fontSize: 17,
+                                  fontSize: 22,
                                 ),
                               ),
                               Text(
                                 "Click + to add an entry",
-                                style: TextStyle(color: Colors.white),
+                                style: GoogleFonts.caveat(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
                               ),
                             ],
                           ),
