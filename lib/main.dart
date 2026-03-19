@@ -13,8 +13,6 @@ import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
-  final notes = await DatabaseHelper.instance.getAllNotes();
-  print(notes);
   runApp(ProviderScope(child: const MyApp()));
 }
 
