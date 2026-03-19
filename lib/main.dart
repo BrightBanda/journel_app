@@ -8,7 +8,6 @@ import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/view/home_page.dart';
 import 'package:journel_new/src/presentation/view/settings_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
-//import 'package:sqflite/sqflite.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
