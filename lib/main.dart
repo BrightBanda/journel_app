@@ -14,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
   final notes = await DatabaseHelper.instance.getAllNotes();
-  print(notes);
+  //print(notes);
   runApp(ProviderScope(child: const MyApp()));
 }
 
