@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:journel_new/src/presentation/view/home_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/event_date_marker.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';

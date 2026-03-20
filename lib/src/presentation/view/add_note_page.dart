@@ -6,10 +6,7 @@ import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
-import 'package:journel_new/src/presentation/viewmodel/selected_day_helper.dart';
-import 'package:journel_new/src/utils/customWidgets/folder_btn.dart';
 import 'package:journel_new/src/utils/notebookStyle/NoteBookLines.dart';
-import 'package:journel_new/src/utils/notebookStyle/spiralBindings.dart';
 
 class AddNotePage extends ConsumerStatefulWidget {
   const AddNotePage({super.key});
@@ -32,13 +29,10 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
   }
 
   Widget build(BuildContext context) {
-    final AddNoteProvider = ref.read(noteProvider.notifier);
     final folderNot = ref.watch(folderProvider);
     const double kLineHeight = 32.0;
     const double kFontSize = 22.0;
-    //final selectedDate = ref.watch(selectedDateProvider);
     final moods = ["😄", "🙂", "😐", "😔", "😫"];
-
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       resizeToAvoidBottomInset: false,
