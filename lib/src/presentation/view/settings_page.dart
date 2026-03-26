@@ -48,17 +48,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               child: Stack(
                 children: [
-                  // Red margin line
-                  Positioned(
-                    left: 48,
-                    top: 0,
-                    bottom: 0,
-                    child: Container(
-                      width: 1.5,
-                      color: Colors.red.withOpacity(0.12),
-                    ),
-                  ),
-
                   // Content
                   SingleChildScrollView(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
