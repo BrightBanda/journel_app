@@ -27,13 +27,7 @@ class ToggleRow extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 15,
-                  color: const Color(0xFFE8DCC8),
-                ),
-              ),
+              Text(title, style: GoogleFonts.playfairDisplay(fontSize: 15)),
               const SizedBox(height: 2),
               Text(
                 subtitle,

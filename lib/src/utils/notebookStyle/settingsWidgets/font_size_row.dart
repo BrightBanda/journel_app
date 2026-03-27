@@ -26,10 +26,7 @@ class _FontSizeRowState extends State<FontSizeRow> {
             children: [
               Text(
                 "Font Size",
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 15,
-                  color: const Color(0xFFE8DCC8),
-                ),
+                style: GoogleFonts.playfairDisplay(fontSize: 15),
               ),
               const SizedBox(height: 2),
               Text(

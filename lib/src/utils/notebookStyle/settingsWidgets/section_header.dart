@@ -15,11 +15,7 @@ class SectionHeader extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             label,
-            style: GoogleFonts.dmSans(
-              fontSize: 10,
-              color: const Color(0xFFD4A853),
-              letterSpacing: 1.5,
-            ),
+            style: GoogleFonts.dmSans(fontSize: 10, letterSpacing: 1.5),
           ),
           const SizedBox(width: 6),
           Expanded(
