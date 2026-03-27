@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/utils/customWidgets/add_folder_dialogBox.dart';
@@ -10,82 +11,85 @@ class FoldersPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final folderProv = ref.watch(folderProvider.notifier);
     final folderNot = ref.watch(folderProvider);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: const Text(
+        foregroundColor: theme.appBarTheme.foregroundColor,
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        elevation: 0,
+        title: Text(
           'Folders',
-          style: TextStyle(
+          style: GoogleFonts.playfairDisplay(
             fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFFD4A853),
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       ),
       body: folderNot.when(
-        data: (folders) {
-          return folders.isNotEmpty
-              ? RefreshIndicator(
-                  color: Colors.yellow,
-                  backgroundColor: const Color(0xFF1E1E1E),
-                  onRefresh: () async {
-                    await ref.refresh(folderProvider.future);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 8,
-                      left: 8,
-                      top: 8,
-                      bottom: 6,
-                    ),
-                    child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: folders.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final folder = folders[index];
-                        return FolderCard(
-                          name: folder.name,
-                          folderId: folder.id,
-                          onPressed: (context) async {
-                            await ref
-                                .read(folderProvider.notifier)
-                                .deleteFolder(folder);
-                          },
-                        );
-                      },
-                    ),
+        data: (folders) => folders.isNotEmpty
+            ? RefreshIndicator(
+                color: const Color(0xFFD4A853),
+                backgroundColor: theme.scaffoldBackgroundColor,
+                onRefresh: () async {
+                  await ref.refresh(folderProvider.future);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    right: 8,
+                    left: 8,
+                    top: 8,
+                    bottom: 6,
                   ),
-                )
-              : Center(
-                  child: Text(
-                    "Click + to create a new folder",
-                    style: TextStyle(color: Colors.white),
+                  child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: folders.length,
+                    itemBuilder: (context, index) {
+                      final folder = folders[index];
+                      return FolderCard(
+                        name: folder.name,
+                        folderId: folder.id,
+                        onPressed: (context) async {
+                          await ref
+                              .read(folderProvider.notifier)
+                              .deleteFolder(folder);
+                        },
+                      );
+                    },
                   ),
-                );
-        },
+                ),
+              )
+            : Center(
+                child: Text(
+                  "Click + to create a new folder",
+                  style: GoogleFonts.caveat(
+                    color: theme.textTheme.bodyMedium?.color,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
         error: (err, _) => Center(child: Text("Error: $err")),
-        loading: () => CircularProgressIndicator(),
+        loading: () => const Center(
+          child: CircularProgressIndicator(color: Color(0xFFD4A853)),
+        ),
       ),
-
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 74, 71, 71),
+        backgroundColor: theme.cardColor,
         onPressed: () async {
           final newFolder = await showDialog<Folder>(
             context: context,
-            builder: (context) {
-              return AddFolderDialogbox();
-            },
+            builder: (context) => AddFolderDialogbox(),
           );
           if (newFolder != null) {
             folderProv.addFolder(name: newFolder.name, id: newFolder.id);
           }
         },
-        shape: CircleBorder(),
-        child: Icon(Icons.add, color: Colors.yellow),
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Color(0xFFD4A853)),
       ),
     );
   }

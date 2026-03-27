@@ -6,6 +6,7 @@ class ArrowRow extends StatelessWidget {
   final String subtitle;
   final void Function()? onTap;
   final bool isDestructive;
+
   const ArrowRow({
     super.key,
     required this.title,
@@ -16,12 +17,14 @@ class ArrowRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Color(0xFF242424))),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: theme.dividerColor)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,7 +38,7 @@ class ArrowRow extends StatelessWidget {
                     fontSize: 15,
                     color: isDestructive
                         ? Colors.redAccent
-                        : const Color(0xFFE8DCC8),
+                        : theme.textTheme.bodyLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -43,7 +46,7 @@ class ArrowRow extends StatelessWidget {
                   subtitle,
                   style: GoogleFonts.dmSans(
                     fontSize: 11,
-                    color: Colors.grey[700],
+                    color: theme.textTheme.bodySmall?.color,
                   ),
                 ),
               ],
@@ -51,8 +54,8 @@ class ArrowRow extends StatelessWidget {
             Icon(
               Icons.chevron_right,
               color: isDestructive
-                  ? Colors.redAccent.withOpacity(0.4)
-                  : Colors.grey[700],
+                  ? Colors.redAccent.withValues(alpha: 0.4)
+                  : theme.textTheme.bodySmall?.color,
               size: 20,
             ),
           ],

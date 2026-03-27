@@ -19,6 +19,7 @@ class FolderCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final notesProv = ref.watch(noteProvider);
 
     return Padding(
@@ -39,13 +40,10 @@ class FolderCard extends ConsumerWidget {
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xFF2A2A2A),
+            color: theme.cardColor,
             borderRadius: BorderRadius.circular(6),
             border: Border(
-              left: BorderSide(
-                color: const Color.fromARGB(179, 212, 169, 83),
-                width: 2,
-              ),
+              left: BorderSide(color: const Color(0xFFD4A853), width: 2),
             ),
           ),
           padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
@@ -86,14 +84,14 @@ class FolderCard extends ConsumerWidget {
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFFE8DCC8),
+                          color: theme.textTheme.bodyLarge?.color,
                         ),
                       ),
                       Text(
                         "${notesInFolder.length} ${notesInFolder.length == 1 ? 'entry' : 'entries'}",
                         style: GoogleFonts.dmSans(
                           fontSize: 11,
-                          color: Colors.grey[600],
+                          color: theme.textTheme.bodySmall?.color,
                         ),
                       ),
                     ],
@@ -107,7 +105,7 @@ class FolderCard extends ConsumerWidget {
                           "No entries yet",
                           style: GoogleFonts.caveat(
                             fontSize: 16,
-                            color: Colors.grey[700],
+                            color: theme.hintColor,
                           ),
                         )
                       : Column(
@@ -122,7 +120,7 @@ class FolderCard extends ConsumerWidget {
                                 "$date  ·  ${note.title}",
                                 style: GoogleFonts.caveat(
                                   fontSize: 16,
-                                  color: Colors.grey[600],
+                                  color: theme.textTheme.bodyMedium?.color,
                                   height: 1.4,
                                 ),
                                 maxLines: 1,
@@ -139,7 +137,7 @@ class FolderCard extends ConsumerWidget {
                     "Updated: $lastUpdatedText",
                     style: GoogleFonts.dmSans(
                       fontSize: 10,
-                      color: Colors.grey[700],
+                      color: theme.textTheme.bodySmall?.color,
                       letterSpacing: 0.3,
                     ),
                   ),

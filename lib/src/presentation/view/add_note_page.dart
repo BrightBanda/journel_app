@@ -28,27 +28,32 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final folderNot = ref.watch(folderProvider);
     const double kLineHeight = 32.0;
     const double kFontSize = 22.0;
     final moods = ["😄", "🙂", "😐", "😔", "😫"];
+
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
+      backgroundColor: theme.scaffoldBackgroundColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Add Note",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: theme.appBarTheme.foregroundColor,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        foregroundColor: Colors.white,
-        backgroundColor: const Color.fromARGB(255, 19, 19, 19),
+        foregroundColor: theme.appBarTheme.foregroundColor,
+        backgroundColor: theme.appBarTheme.backgroundColor,
         elevation: 0,
       ),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //const SpiralBinding(),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -79,7 +84,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                             ).format(DateTime.now()).toUpperCase(),
                             style: GoogleFonts.dmSans(
                               fontSize: 10,
-                              color: Colors.grey[600],
+                              color: theme.textTheme.bodySmall?.color,
                               letterSpacing: 0.8,
                             ),
                           ),
@@ -103,7 +108,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                             "MOOD",
                             style: GoogleFonts.dmSans(
                               fontSize: 9,
-                              color: Colors.grey[700],
+                              color: theme.textTheme.bodySmall?.color,
                               letterSpacing: 1.2,
                             ),
                           ),
@@ -137,7 +142,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                   ),
 
                   const SizedBox(height: 12),
-                  const Divider(color: Color(0xFF2A2A2A), thickness: 1),
+                  Divider(color: theme.dividerColor, thickness: 1),
 
                   // Title field
                   TextField(
@@ -145,52 +150,49 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                     maxLength: 30,
                     style: GoogleFonts.caveat(
                       fontSize: 26,
-                      color: const Color(0xFFE8DCC8),
+                      color: theme.textTheme.bodyLarge?.color,
                       letterSpacing: 0.3,
                     ),
                     decoration: InputDecoration(
                       hintText: "Title…",
                       hintStyle: GoogleFonts.caveat(
                         fontSize: 26,
-                        color: Colors.grey[700],
+                        color: theme.hintColor,
                       ),
-
+                      counterText: "",
                       border: InputBorder.none,
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(vertical: 1),
                     ),
                   ),
 
-                  const Divider(color: Color(0xFF2E2E2E), thickness: 1),
+                  Divider(color: theme.dividerColor, thickness: 1),
                   const SizedBox(height: 12),
+
+                  // Content field with ruled lines
                   ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: 100, //
-                    ),
+                    constraints: const BoxConstraints(minHeight: 100),
                     child: Stack(
                       children: [
-                        // Ruled lines
                         Positioned.fill(
                           child: CustomPaint(
                             painter: Notebooklines(lineHeight: kLineHeight),
                           ),
                         ),
-
-                        // Content field
                         TextField(
                           controller: contentController,
                           maxLines: null,
                           minLines: 10,
                           style: GoogleFonts.caveat(
                             fontSize: kFontSize,
-                            color: const Color(0xFFC8BCA8),
+                            color: theme.textTheme.bodyMedium?.color,
                             height: kLineHeight / kFontSize,
                           ),
                           decoration: InputDecoration(
-                            hintText: "Whats on your mind?,\n\n",
+                            hintText: "What's on your mind?\n\n",
                             hintStyle: GoogleFonts.caveat(
                               fontSize: kFontSize,
-                              color: Colors.grey[700],
+                              color: theme.hintColor,
                               height: kLineHeight / kFontSize,
                             ),
                             border: InputBorder.none,
@@ -201,6 +203,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 20),
 
                   // Folder section
@@ -208,13 +211,13 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                     "SAVE TO FOLDER",
                     style: GoogleFonts.dmSans(
                       fontSize: 9,
-                      color: Colors.grey[600],
+                      color: theme.textTheme.bodySmall?.color,
                       letterSpacing: 1.2,
                     ),
                   ),
 
                   const SizedBox(height: 8),
-                  //folder list
+
                   folderNot.when(
                     data: (folders) => folders.isNotEmpty
                         ? SizedBox(
@@ -245,7 +248,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                                       border: Border.all(
                                         color: isSelected
                                             ? const Color(0xFFD4A853)
-                                            : Colors.grey[700]!,
+                                            : theme.dividerColor,
                                       ),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
@@ -255,7 +258,7 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                                         fontSize: 11,
                                         color: isSelected
                                             ? const Color(0xFF1A1A1A)
-                                            : Colors.grey[500],
+                                            : theme.textTheme.bodySmall?.color,
                                       ),
                                     ),
                                   ),
@@ -281,9 +284,10 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                     error: (e, _) => Text("Error: $e"),
                     loading: () => const CircularProgressIndicator(),
                   ),
+
                   const SizedBox(height: 24),
 
-                  //save button
+                  // Save button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
