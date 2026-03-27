@@ -4,12 +4,14 @@ class AppTheme {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     primarySwatch: Colors.yellow,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Color.fromARGB(255, 227, 229, 232),
 
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
     ),
+
+    cardColor: Colors.white,
   );
 
   static final darkTheme = ThemeData(
@@ -21,5 +23,6 @@ class AppTheme {
       backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       foregroundColor: Colors.white,
     ),
+    cardColor: const Color(0xFF2A2A2A),
   );
 }

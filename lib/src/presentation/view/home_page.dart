@@ -25,10 +25,10 @@ class _HomePageState extends ConsumerState<HomePage> {
     final folderNot = ref.watch(folderProvider);
     final moodIcons = ["😄", "🙂", "😐", "😔", "😫"];
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 19, 19, 19),
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         elevation: 0,
         titleSpacing: 16,
         title: Row(
@@ -37,11 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             const Text(
               'Journal',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(width: 20),
             GestureDetector(
@@ -71,7 +67,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 },
                 child: Text(
                   "Yesterday",
-                  style: GoogleFonts.caveat(color: Colors.white, fontSize: 20),
+                  style: GoogleFonts.caveat(fontSize: 20),
                 ),
               ),
               SizedBox(width: 14),
@@ -79,10 +75,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 onPressed: () {
                   selectedDay.setDate(DateTime.now());
                 },
-                child: Text(
-                  "Today",
-                  style: GoogleFonts.caveat(color: Colors.white, fontSize: 20),
-                ),
+                child: Text("Today", style: GoogleFonts.caveat(fontSize: 20)),
               ),
             ],
           ),

@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:journel_new/src/presentation/viewmodel/theme_notifier.dart';
 import 'package:journel_new/src/utils/notebookStyle/settingsWidgets/arrow_row.dart';
 import 'package:journel_new/src/utils/notebookStyle/settingsWidgets/font_size_row.dart';
 import 'package:journel_new/src/utils/notebookStyle/settingsWidgets/section_header.dart';
 import 'package:journel_new/src/utils/notebookStyle/settingsWidgets/toggle_row.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  bool pinLockEnabled = true;
-  bool darkModeEnabled = true;
-  int selectedFontSize = 1; // 0 = small, 1 = medium, 2 = large
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeProv = ref.watch(ThemeProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xFF141414),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF141414),
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         elevation: 0,
         title: Text(
           "Settings",
@@ -42,8 +36,8 @@ class _SettingsPageState extends State<SettingsPage> {
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(right: 10, top: 12),
-              decoration: const BoxDecoration(
-                color: Color(0xFF1C1C1C),
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.only(topRight: Radius.circular(8)),
               ),
               child: Stack(
@@ -59,9 +53,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         ToggleRow(
                           title: "PIN Lock",
                           subtitle: "Protect your journal",
-                          value: pinLockEnabled,
-                          onChanged: (val) =>
-                              setState(() => pinLockEnabled = val),
+                          value: false,
+                          onChanged: (value) {},
                         ),
                         ArrowRow(
                           title: "Change PIN",
@@ -77,9 +70,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ToggleRow(
                           title: "Dark Mode",
                           subtitle: "Switch theme",
-                          value: darkModeEnabled,
-                          onChanged: (val) =>
-                              setState(() => darkModeEnabled = val),
+                          value: themeProv == ThemeMode.dark,
+                          onChanged: (val) {
+                            ref.read(ThemeProvider.notifier).toggleTheme();
+                          },
                         ),
 
                         const SizedBox(height: 20),

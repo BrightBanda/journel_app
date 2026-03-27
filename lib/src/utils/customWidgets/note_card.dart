@@ -24,7 +24,7 @@ class NoteCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: const Color(0xFF2A2A2A),
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(6),
           border: Border(
             left: BorderSide(
@@ -48,7 +48,6 @@ class NoteCard extends StatelessWidget {
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFFE8DCC8),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
