@@ -7,7 +7,9 @@ import 'package:journel_new/src/presentation/view/calender_page.dart';
 import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/view/home_page.dart';
 import 'package:journel_new/src/presentation/view/settings_page.dart';
+import 'package:journel_new/src/presentation/viewmodel/app_theme.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/theme_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +34,12 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(navIndexProvider);
     final navNotifier = ref.read(navIndexProvider.notifier);
+    final themeMode = ref.watch(ThemeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
       home: Scaffold(
         body: _pages[currentIndex],
         bottomNavigationBar: GNav(
