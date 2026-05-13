@@ -15,9 +15,6 @@ class _FontSizeRowState extends State<FontSizeRow> {
     int selectedFontSize = 1;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFF242424))),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

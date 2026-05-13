@@ -142,17 +142,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   children: [
                                     Text(
                                       "No entries for this day",
-                                      style: GoogleFonts.caveat(
-                                        color: Colors.white,
-                                        fontSize: 22,
-                                      ),
+                                      style: GoogleFonts.caveat(fontSize: 22),
                                     ),
                                     Text(
                                       "Click + to add an entry",
-                                      style: GoogleFonts.caveat(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                      ),
+                                      style: GoogleFonts.caveat(fontSize: 18),
                                     ),
                                   ],
                                 ),
