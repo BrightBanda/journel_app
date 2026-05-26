@@ -82,7 +82,7 @@ class FoldersPage extends ConsumerWidget {
         onPressed: () async {
           final newFolder = await showDialog<Folder>(
             context: context,
-            builder: (context) => AddFolderDialogbox(),
+            builder: (context) => const AddFolderDialogbox(),
           );
           if (newFolder != null) {
             folderProv.addFolder(name: newFolder.name, id: newFolder.id);

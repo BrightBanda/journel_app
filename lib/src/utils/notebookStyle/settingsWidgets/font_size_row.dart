@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
 
-class FontSizeRow extends StatefulWidget {
+class FontSizeRow extends ConsumerWidget {
   const FontSizeRow({super.key});
 
   @override
-  State<FontSizeRow> createState() => _FontSizeRowState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final indicators = [16.0, 20.0, 24.0];
+    final selectedAsync = ref.watch(fontSizeProvider);
+    final selected = selectedAsync.value ?? 1;
 
-class _FontSizeRowState extends State<FontSizeRow> {
-  @override
-  Widget build(BuildContext context) {
-    final sizes = [16.0, 20.0, 24.0];
-    int selectedFontSize = 1;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -23,23 +23,27 @@ class _FontSizeRowState extends State<FontSizeRow> {
             children: [
               Text(
                 "Font Size",
-                style: GoogleFonts.playfairDisplay(fontSize: 15),
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: 15,
+                  color: theme.textTheme.bodyLarge?.color,
+                ),
               ),
               const SizedBox(height: 2),
               Text(
                 "Writing area text size",
                 style: GoogleFonts.dmSans(
                   fontSize: 11,
-                  color: Colors.grey[700],
+                  color: theme.textTheme.bodySmall?.color,
                 ),
               ),
             ],
           ),
           Row(
-            children: List.generate(3, (index) {
-              final isActive = selectedFontSize == index;
+            children: List.generate(indicators.length, (index) {
+              final isActive = selected == index;
               return GestureDetector(
-                onTap: () => setState(() => selectedFontSize = index),
+                onTap: () =>
+                    ref.read(fontSizeProvider.notifier).setIndex(index),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   margin: const EdgeInsets.only(left: 6),
@@ -49,7 +53,7 @@ class _FontSizeRowState extends State<FontSizeRow> {
                     border: Border.all(
                       color: isActive
                           ? const Color(0xFFD4A853)
-                          : Colors.grey[800]!,
+                          : theme.dividerColor,
                     ),
                     borderRadius: BorderRadius.circular(4),
                   ),
@@ -57,10 +61,10 @@ class _FontSizeRowState extends State<FontSizeRow> {
                     child: Text(
                       "A",
                       style: GoogleFonts.playfairDisplay(
-                        fontSize: sizes[index],
+                        fontSize: indicators[index],
                         color: isActive
                             ? const Color(0xFFD4A853)
-                            : Colors.grey[700],
+                            : theme.textTheme.bodySmall?.color,
                       ),
                     ),
                   ),
@@ -71,6 +75,5 @@ class _FontSizeRowState extends State<FontSizeRow> {
         ],
       ),
     );
-    ;
   }
 }

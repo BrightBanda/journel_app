@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 import 'package:journel_new/src/utils/notebookStyle/NoteBookLines.dart';
 
@@ -32,8 +33,9 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final folderNot = ref.watch(folderProvider);
-    const double kLineHeight = 32.0;
-    const double kFontSize = 22.0;
+    final fontIndex = ref.watch(fontSizeProvider).value ?? 1;
+    final double kFontSize = FontSizeNotifier.sizeFor(fontIndex);
+    final double kLineHeight = kFontSize + 10;
     final moods = ["😄", "🙂", "😐", "😔", "😫"];
 
     return Scaffold(

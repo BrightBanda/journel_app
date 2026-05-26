@@ -57,6 +57,11 @@ class AddNotePageViewmodel extends AsyncNotifier<List<Note>> {
     );
     DatabaseHelper.instance.deleteNoteById(note.id);
   }
+
+  Future<void> clearAll() async {
+    await DatabaseHelper.instance.deleteAllNotes();
+    state = const AsyncValue.data([]);
+  }
 }
 
 final noteProvider = AsyncNotifierProvider<AddNotePageViewmodel, List<Note>>(

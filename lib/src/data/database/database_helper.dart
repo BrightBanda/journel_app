@@ -89,4 +89,9 @@ class DatabaseHelper {
     final db = await instance.database;
     db.delete('notes', where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<void> deleteAllNotes() async {
+    final db = await instance.database;
+    await db.delete('notes');
+  }
 }

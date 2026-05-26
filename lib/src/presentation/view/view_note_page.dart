@@ -6,6 +6,7 @@ import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/data/models/note.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
 import 'package:journel_new/src/utils/notebookStyle/NoteBookLines.dart';
 
 class ViewNotePage extends ConsumerStatefulWidget {
@@ -19,25 +20,28 @@ class ViewNotePage extends ConsumerStatefulWidget {
 class _ViewNotePageState extends ConsumerState<ViewNotePage> {
   final moodIcons = ["😄", "🙂", "😐", "😔", "😫"];
 
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final addNoteProvider = ref.read(noteProvider.notifier);
     final folderProv = ref.watch(folderProvider);
+    final fontIndex = ref.watch(fontSizeProvider).value ?? 1;
     final note = widget.note;
     final parsedDate = DateTime.parse(note.dateCreated);
-    const double kLineHeight = 32.0;
-    const double kFontSize = 18.0;
+    final double kFontSize = FontSizeNotifier.sizeFor(fontIndex) - 4;
+    final double kLineHeight = kFontSize + 14;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xFF141414),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF141414),
-        foregroundColor: Colors.white,
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        foregroundColor: theme.appBarTheme.foregroundColor,
         elevation: 0,
         title: Text(
           note.title,
           style: GoogleFonts.playfairDisplay(
-            color: const Color(0xFFE8DCC8),
+            color: const Color(0xFFD4A853),
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -62,10 +66,12 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(right: 10, top: 12),
-              decoration: const BoxDecoration(
-                color: Color(0xFF1C1C1C),
-                borderRadius: BorderRadius.only(topRight: Radius.circular(8)),
-                boxShadow: [
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(8),
+                ),
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black54,
                     blurRadius: 28,
@@ -113,7 +119,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                                   ).format(parsedDate).toUpperCase(),
                                   style: GoogleFonts.dmSans(
                                     fontSize: 10,
-                                    color: Colors.grey[600],
+                                    color: theme.textTheme.bodySmall?.color,
                                     letterSpacing: 0.8,
                                   ),
                                 ),
@@ -135,7 +141,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                                   "MOOD",
                                   style: GoogleFonts.dmSans(
                                     fontSize: 9,
-                                    color: Colors.grey[700],
+                                    color: theme.textTheme.bodySmall?.color,
                                     letterSpacing: 1.2,
                                   ),
                                 ),
@@ -150,10 +156,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                         ),
 
                         const SizedBox(height: 12),
-                        Divider(
-                          color: Colors.white.withValues(alpha: 0.06),
-                          thickness: 1,
-                        ),
+                        Divider(color: theme.dividerColor, thickness: 1),
                         const SizedBox(height: 6),
 
                         // ── Title ──
@@ -161,15 +164,12 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                           note.title,
                           style: GoogleFonts.caveat(
                             fontSize: 24,
-                            color: const Color(0xFFE8DCC8),
+                            color: theme.textTheme.bodyLarge?.color,
                             letterSpacing: 0.3,
                           ),
                         ),
 
-                        Divider(
-                          color: Colors.white.withValues(alpha: 0.08),
-                          thickness: 1,
-                        ),
+                        Divider(color: theme.dividerColor, thickness: 1),
                         const SizedBox(height: 6),
 
                         // ── Folder tag ──
@@ -227,7 +227,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                                 note.content,
                                 style: GoogleFonts.caveat(
                                   fontSize: kFontSize,
-                                  color: const Color(0xFFC8BCA8),
+                                  color: theme.textTheme.bodyMedium?.color,
                                   height: kLineHeight / kFontSize,
                                 ),
                               ),
@@ -244,7 +244,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                             style: GoogleFonts.playfairDisplay(
                               fontSize: 13,
                               fontStyle: FontStyle.italic,
-                              color: Colors.grey[700],
+                              color: theme.textTheme.bodySmall?.color,
                             ),
                           ),
                         ),
