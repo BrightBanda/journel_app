@@ -6,6 +6,7 @@ import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/presentation/view/view_note_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/selected_day_helper.dart';
 import 'package:journel_new/src/utils/customWidgets/note_card.dart';

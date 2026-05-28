@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
+import 'package:journel_new/src/utils/journal_text-style.dart';
 
-class NoteCard extends StatelessWidget {
+class NoteCard extends ConsumerWidget {
   final String title;
   final Text moodIcon;
   final String detals;
@@ -18,7 +21,9 @@ class NoteCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fontIndex = ref.watch(fontSizeProvider).value ?? 1;
+    final double kFontSize = FontSizeNotifier.sizeFor(fontIndex);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, right: 4),
       child: Container(
@@ -46,7 +51,7 @@ class NoteCard extends StatelessWidget {
                     child: Text(
                       title,
                       style: GoogleFonts.playfairDisplay(
-                        fontSize: 16,
+                        fontSize: kFontSize,
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,
@@ -63,8 +68,8 @@ class NoteCard extends StatelessWidget {
               // Content preview
               Text(
                 detals,
-                style: GoogleFonts.caveat(
-                  fontSize: 18,
+                style: ref.journalTextStyle(
+                  fontSize: kFontSize,
                   color: Colors.grey[600],
                   height: 1.5,
                 ),

@@ -7,6 +7,7 @@ import 'package:journel_new/src/data/models/note.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
+import 'package:journel_new/src/utils/journal_text-style.dart';
 import 'package:journel_new/src/utils/notebookStyle/NoteBookLines.dart';
 
 class ViewNotePage extends ConsumerStatefulWidget {
@@ -162,11 +163,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                         // ── Title ──
                         Text(
                           note.title,
-                          style: GoogleFonts.caveat(
-                            fontSize: 24,
-                            color: theme.textTheme.bodyLarge?.color,
-                            letterSpacing: 0.3,
-                          ),
+                          style: ref.journalTextStyle(fontSize: kFontSize + 2),
                         ),
 
                         Divider(color: theme.dividerColor, thickness: 1),
@@ -220,15 +217,14 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                                 child: CustomPaint(
                                   painter: Notebooklines(
                                     lineHeight: kLineHeight,
+                                    lineColor: Theme.of(context).dividerColor,
                                   ),
                                 ),
                               ),
                               SelectableText(
                                 note.content,
-                                style: GoogleFonts.caveat(
+                                style: ref.journalTextStyle(
                                   fontSize: kFontSize,
-                                  color: theme.textTheme.bodyMedium?.color,
-                                  height: kLineHeight / kFontSize,
                                 ),
                               ),
                             ],

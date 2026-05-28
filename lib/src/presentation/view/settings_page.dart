@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:journel_new/src/presentation/view/pin_lock_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
+import 'package:journel_new/src/presentation/viewmodel/font_style_notifier.dart';
 import 'package:journel_new/src/presentation/viewmodel/pin_notifier.dart';
 import 'package:journel_new/src/presentation/viewmodel/theme_notifier.dart';
 import 'package:journel_new/src/utils/notebookStyle/settingsWidgets/arrow_row.dart';
@@ -133,6 +134,7 @@ class SettingsPage extends ConsumerWidget {
     final themeProv = ref.watch(ThemeProvider);
     final pinAsync = ref.watch(pinProvider);
     final pinState = pinAsync.value;
+    final isCursiveFont = ref.watch(fontStyleProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -191,6 +193,14 @@ class SettingsPage extends ConsumerWidget {
                         // ── Appearance ──
                         SectionHeader(label: "APPEARANCE"),
                         FontSizeRow(),
+                        ToggleRow(
+                          title: "Font Style",
+                          subtitle: "Change font style",
+                          value: isCursiveFont,
+                          onChanged: (val) {
+                            ref.read(fontStyleProvider.notifier).toggleFont();
+                          },
+                        ),
                         ToggleRow(
                           title: "Dark Mode",
                           subtitle: "Switch theme",

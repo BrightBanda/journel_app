@@ -21,7 +21,6 @@ class PinLockViewModel extends AsyncNotifier<PinLockUiState> {
     return const PinLockUiState();
   }
 
-  /// Only checks lengths and returns true/false outcome. Safe from state race conditions.
   Future<bool> verifyCurrentPin(String pin) async {
     if (state.isLoading) return false;
 

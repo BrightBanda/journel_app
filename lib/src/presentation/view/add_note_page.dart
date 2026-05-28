@@ -7,6 +7,7 @@ import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.d
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
+import 'package:journel_new/src/utils/journal_text-style.dart';
 import 'package:journel_new/src/utils/notebookStyle/NoteBookLines.dart';
 
 class AddNotePage extends ConsumerStatefulWidget {
@@ -150,14 +151,14 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                   TextField(
                     controller: titleController,
                     maxLength: 30,
-                    style: GoogleFonts.caveat(
+                    style: ref.journalTextStyle(
                       fontSize: 26,
                       color: theme.textTheme.bodyLarge?.color,
-                      letterSpacing: 0.3,
                     ),
+
                     decoration: InputDecoration(
                       hintText: "Title…",
-                      hintStyle: GoogleFonts.caveat(
+                      hintStyle: ref.journalTextStyle(
                         fontSize: 26,
                         color: theme.hintColor,
                       ),
@@ -178,21 +179,24 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       children: [
                         Positioned.fill(
                           child: CustomPaint(
-                            painter: Notebooklines(lineHeight: kLineHeight),
+                            painter: Notebooklines(
+                              lineHeight: kLineHeight,
+                              lineColor: Theme.of(context).dividerColor,
+                            ),
                           ),
                         ),
                         TextField(
                           controller: contentController,
                           maxLines: null,
                           minLines: 10,
-                          style: GoogleFonts.caveat(
+                          style: ref.journalTextStyle(
                             fontSize: kFontSize,
                             color: theme.textTheme.bodyMedium?.color,
                             height: kLineHeight / kFontSize,
                           ),
                           decoration: InputDecoration(
                             hintText: "What's on your mind?\n\n",
-                            hintStyle: GoogleFonts.caveat(
+                            hintStyle: ref.journalTextStyle(
                               fontSize: kFontSize,
                               color: theme.hintColor,
                               height: kLineHeight / kFontSize,
@@ -335,10 +339,9 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       ),
                       child: Text(
                         "Save & Close",
-                        style: GoogleFonts.caveat(
+                        style: ref.journalTextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5,
                         ),
                       ),
                     ),

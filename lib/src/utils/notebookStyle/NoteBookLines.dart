@@ -6,7 +6,7 @@ class Notebooklines extends CustomPainter {
 
   Notebooklines({
     required this.lineHeight,
-    this.lineColor = const Color(0xFF2A2A2A),
+    this.lineColor = const Color.fromARGB(255, 136, 136, 136),
   });
 
   @override

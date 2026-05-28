@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
+import 'package:journel_new/src/utils/journal_text-style.dart';
 
 class FolderCard extends ConsumerWidget {
   final String name;
@@ -103,7 +104,7 @@ class FolderCard extends ConsumerWidget {
                   prevNotes.isEmpty
                       ? Text(
                           "No entries yet",
-                          style: GoogleFonts.caveat(
+                          style: ref.journalTextStyle(
                             fontSize: 16,
                             color: theme.hintColor,
                           ),
