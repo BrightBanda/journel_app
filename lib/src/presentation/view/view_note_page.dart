@@ -30,7 +30,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
     final note = widget.note;
     final parsedDate = DateTime.parse(note.dateCreated);
     final double kFontSize = FontSizeNotifier.sizeFor(fontIndex) - 4;
-    final double kLineHeight = kFontSize + 14;
+    final double kLineHeight = kFontSize + 10;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -48,10 +48,35 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
           ),
         ),
         actions: [
+          //------delete button
           TextButton(
             onPressed: () {
-              addNoteProvider.deleteNote(note);
-              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext contenx) {
+                  return AlertDialog(
+                    content: Text(
+                      "Are you sure you want to delete this entry?",
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          addNoteProvider.deleteNote(note);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: Text("Delete"),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
             child: Text(
               "Delete",
@@ -225,6 +250,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                                 note.content,
                                 style: ref.journalTextStyle(
                                   fontSize: kFontSize,
+                                  height: kLineHeight / kFontSize,
                                 ),
                               ),
                             ],

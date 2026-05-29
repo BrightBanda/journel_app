@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-// Make sure to import your fontStyleProvider
 import 'package:journel_new/src/presentation/viewmodel/font_style_notifier.dart';
 
 extension JournalTextStyles on WidgetRef {
