@@ -9,6 +9,7 @@ import 'package:journel_new/src/utils/journal_text-style.dart';
 class FolderCard extends ConsumerWidget {
   final String name;
   final String folderId;
+  final bool isDefalut;
   final Future<void> Function(BuildContext)? onPressed;
 
   const FolderCard({
@@ -16,6 +17,7 @@ class FolderCard extends ConsumerWidget {
     required this.name,
     required this.folderId,
     required this.onPressed,
+    required this.isDefalut,
   });
 
   @override

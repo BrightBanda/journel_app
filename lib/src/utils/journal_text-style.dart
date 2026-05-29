@@ -22,7 +22,7 @@ extension JournalTextStyles on WidgetRef {
       );
     } else {
       return GoogleFonts.dmSans(
-        fontSize: fontSize - 4,
+        fontSize: fontSize,
         color: color,
         height: height,
         fontWeight: fontWeight,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:journel_new/src/data/models/folder.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
+import 'package:journel_new/src/utils/app_snackbar.dart';
 import 'package:journel_new/src/utils/customWidgets/add_folder_dialogBox.dart';
 import 'package:journel_new/src/utils/customWidgets/folder_card.dart';
 
@@ -45,19 +46,24 @@ class FoldersPage extends ConsumerWidget {
                     top: 8,
                     bottom: 6,
                   ),
+
                   child: ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: folders.length,
                     itemBuilder: (context, index) {
                       final folder = folders[index];
+                      final isDefaultFolder = folder.name == "default";
                       return FolderCard(
                         name: folder.name,
                         folderId: folder.id,
-                        onPressed: (context) async {
-                          await ref
-                              .read(folderProvider.notifier)
-                              .deleteFolder(folder);
-                        },
+                        isDefalut: isDefaultFolder,
+                        onPressed: isDefaultFolder
+                            ? null
+                            : (context) async {
+                                await ref
+                                    .read(folderProvider.notifier)
+                                    .deleteFolder(folder);
+                              },
                       );
                     },
                   ),

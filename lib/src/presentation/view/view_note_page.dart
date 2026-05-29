@@ -49,7 +49,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
         ),
         actions: [
           //------delete button
-          TextButton(
+          IconButton(
             onPressed: () {
               showDialog(
                 context: context,
@@ -78,10 +78,7 @@ class _ViewNotePageState extends ConsumerState<ViewNotePage> {
                 },
               );
             },
-            child: Text(
-              "Delete",
-              style: GoogleFonts.dmSans(color: Colors.redAccent, fontSize: 13),
-            ),
+            icon: Icon(Icons.delete_outline, color: Colors.red, size: 24),
           ),
         ],
       ),
