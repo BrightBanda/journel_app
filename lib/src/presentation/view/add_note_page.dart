@@ -7,6 +7,7 @@ import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.d
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
 import 'package:journel_new/src/presentation/viewmodel/main_app_viewmodel.dart';
+import 'package:journel_new/src/utils/app_snackbar.dart';
 import 'package:journel_new/src/utils/journal_text-style.dart';
 import 'package:journel_new/src/utils/notebookStyle/NoteBookLines.dart';
 
@@ -300,14 +301,10 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                       onPressed: () {
                         if (titleController.text.isEmpty ||
                             contentController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
+                          AppSnackbar.showError(
+                            context,
+                            message:
                                 "Please fill in the title and content fields",
-                              ),
-                              backgroundColor: Colors.red,
-                              duration: Duration(seconds: 2),
-                            ),
                           );
                           return;
                         }

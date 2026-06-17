@@ -44,6 +44,7 @@ dependencies:
   google_fonts: ^8.0.2
   shared_preferences: ^2.3.2
   flutter_secure_storage: ^9.2.2
+  circle_nav_bar: ^2.2.0
 
 dev_dependencies:
   flutter_test:

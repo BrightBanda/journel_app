@@ -1,3 +1,4 @@
+import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,20 +63,24 @@ class _AppShell extends ConsumerWidget {
     final navNotifier = ref.read(navIndexProvider.notifier);
     return Scaffold(
       body: _pages[currentIndex],
-      bottomNavigationBar: GNav(
-        selectedIndex: currentIndex,
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
-        backgroundColor: const Color.fromARGB(255, 19, 19, 19),
-        color: Colors.white,
-        activeColor: Colors.yellow,
-        textStyle: const TextStyle(color: Colors.white),
-        onTabChange: (index) => navNotifier.changeTab(index),
-        tabs: const [
-          GButton(icon: Icons.home_rounded),
-          GButton(icon: Icons.calendar_month_rounded),
-          GButton(icon: Icons.add, iconSize: 45),
-          GButton(icon: Icons.folder_rounded),
-          GButton(icon: Icons.settings_rounded),
+      bottomNavigationBar: CircleNavBar(
+        color: const Color.fromARGB(255, 22, 22, 22),
+        activeIndex: currentIndex,
+
+        onTap: (index) => navNotifier.changeTab(index),
+        activeIcons: [
+          Icon(Icons.home_rounded, color: Colors.yellow),
+          Icon(Icons.calendar_month_rounded, color: Colors.yellow),
+          Icon(Icons.add, color: Colors.yellow),
+          Icon(Icons.folder_rounded, color: Colors.yellow),
+          Icon(Icons.settings_rounded, color: Colors.yellow),
+        ],
+        inactiveIcons: [
+          Icon(Icons.home_rounded, color: Colors.white),
+          Icon(Icons.calendar_month_rounded, color: Colors.white),
+          Icon(Icons.add, color: Colors.white),
+          Icon(Icons.folder_rounded, color: Colors.white),
+          Icon(Icons.settings_rounded, color: Colors.white),
         ],
       ),
     );

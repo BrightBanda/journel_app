@@ -52,7 +52,7 @@ class FoldersPage extends ConsumerWidget {
                     itemCount: folders.length,
                     itemBuilder: (context, index) {
                       final folder = folders[index];
-                      final isDefaultFolder = folder.name == "default";
+                      final isDefaultFolder = folder.id == "default";
                       return FolderCard(
                         name: folder.name,
                         folderId: folder.id,
