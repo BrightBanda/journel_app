@@ -1,16 +1,14 @@
-# journel_new
+Self-Space is a personal journaling app designed to help you capture your thoughts, experiences, and emotions in one private space. Whether you're documenting daily events, reflecting on your feelings, tracking personal growth, or simply clearing your mind, Self-Space makes it easy to record what matters most.
 
-A new Flutter project.
+With a clean and distraction-free interface, you can create journal entries, organize your memories, and revisit important moments whenever you need them. Build a habit of self-reflection, celebrate your progress, and preserve your story—one day at a time.
 
-## Getting Started
+Features:
 
-This project is a starting point for a Flutter application.
+Write and save daily journal entries
+Record thoughts, ideas, and personal experiences
+Track your mood and reflections
+Organize entries for easy access
+Simple, clean, and user-friendly design
+Private space for your personal journey (note please do not forget the pin if you have set one, there's no way of recovering it for now, it'll be fixed in future updates)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Your thoughts. Your story. Your day.
