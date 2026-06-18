@@ -9,6 +9,6 @@ Record thoughts, ideas, and personal experiences
 Track your mood and reflections
 Organize entries for easy access
 Simple, clean, and user-friendly design
-Private space for your personal journey (note please do not forget the pin if you have set one, there's no way of recovering it for now, it'll be fixed in future updates)
+Private space for your personal journey (**note please do not forget the pin if you have set one, there's no way of recovering it for now, it'll be fixed in future updates)**
 
 Your thoughts. Your story. Your day.
