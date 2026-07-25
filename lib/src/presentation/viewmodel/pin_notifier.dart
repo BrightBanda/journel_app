@@ -82,6 +82,7 @@ class PinNotifier extends AsyncNotifier<PinState> {
     );
   }
 }
+// this is a test comment for creating a branch
 
 final pinProvider = AsyncNotifierProvider<PinNotifier, PinState>(
   PinNotifier.new,

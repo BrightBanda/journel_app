@@ -3,7 +3,8 @@
     "allow": [
       "PowerShell(flutter pub get)",
       "PowerShell(Get-Command flutter -ErrorAction SilentlyContinue; Get-ChildItem -Path \"C:\\\\src\",\"C:\\\\flutter\",\"C:\\\\dev\",\"$env:LOCALAPPDATA\",\"$env:USERPROFILE\" -Filter \"flutter.bat\" -Recurse -ErrorAction SilentlyContinue -Depth 4 | Select-Object -First 5 FullName)",
-      "PowerShell($paths = @\\(\"C:\\\\flutter\\\\bin\\\\flutter.bat\", \"C:\\\\src\\\\flutter\\\\bin\\\\flutter.bat\", \"$env:LOCALAPPDATA\\\\flutter\\\\bin\\\\flutter.bat\", \"$env:USERPROFILE\\\\flutter\\\\bin\\\\flutter.bat\", \"C:\\\\dev\\\\flutter\\\\bin\\\\flutter.bat\", \"$env:USERPROFILE\\\\fvm\\\\default\\\\bin\\\\flutter.bat\"\\); foreach \\($p in $paths\\) { if \\(Test-Path $p\\) { Write-Output $p } })"
+      "PowerShell($paths = @\\(\"C:\\\\flutter\\\\bin\\\\flutter.bat\", \"C:\\\\src\\\\flutter\\\\bin\\\\flutter.bat\", \"$env:LOCALAPPDATA\\\\flutter\\\\bin\\\\flutter.bat\", \"$env:USERPROFILE\\\\flutter\\\\bin\\\\flutter.bat\", \"C:\\\\dev\\\\flutter\\\\bin\\\\flutter.bat\", \"$env:USERPROFILE\\\\fvm\\\\default\\\\bin\\\\flutter.bat\"\\); foreach \\($p in $paths\\) { if \\(Test-Path $p\\) { Write-Output $p } })",
+      "Bash(flutter pub *)"
     ]
   }
 }
