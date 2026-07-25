@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:journel_new/src/presentation/view/folders_page.dart';
 import 'package:journel_new/src/presentation/viewmodel/add_note_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/folder_page_viewmodel.dart';
 import 'package:journel_new/src/presentation/viewmodel/font_size_notifier.dart';
@@ -29,6 +28,43 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
     titleController.dispose();
     contentController.dispose();
     super.dispose();
+  }
+
+  void _showCreateFolderDialog() {
+    final folderNameController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("New Folder", style: GoogleFonts.dmSans(fontWeight: FontWeight.w600)),
+        content: TextField(
+          controller: folderNameController,
+          autofocus: true,
+          decoration: InputDecoration(
+            hintText: "Folder name",
+            hintStyle: GoogleFonts.dmSans(),
+          ),
+          style: GoogleFonts.dmSans(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text("Cancel", style: GoogleFonts.dmSans()),
+          ),
+          TextButton(
+            onPressed: () {
+              final name = folderNameController.text.trim();
+              if (name.isNotEmpty) {
+                final id = DateTime.now().millisecondsSinceEpoch.toString();
+                ref.read(folderProvider.notifier).addFolder(name: name, id: id);
+                setState(() => selectedFolderId = id);
+              }
+              Navigator.pop(ctx);
+            },
+            child: Text("Create", style: GoogleFonts.dmSans(color: const Color(0xFFD4A853), fontWeight: FontWeight.w600)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -214,13 +250,26 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                   const SizedBox(height: 20),
 
                   // Folder section
-                  Text(
-                    "SAVE TO FOLDER",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 9,
-                      color: theme.textTheme.bodySmall?.color,
-                      letterSpacing: 1.2,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "SAVE TO FOLDER",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 9,
+                          color: theme.textTheme.bodySmall?.color,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: _showCreateFolderDialog,
+                        child: const Icon(
+                          Icons.add_circle_outline,
+                          size: 16,
+                          color: Color(0xFFD4A853),
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 8),
@@ -273,19 +322,11 @@ class _AddNotePageState extends ConsumerState<AddNotePage> {
                               },
                             ),
                           )
-                        : TextButton(
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const FoldersPage(),
-                              ),
-                            ),
-                            child: Text(
-                              "No folders yet — tap to create one",
-                              style: GoogleFonts.dmSans(
-                                color: Colors.redAccent,
-                                fontSize: 12,
-                              ),
+                        : Text(
+                            "No folders yet — tap + to create one",
+                            style: GoogleFonts.dmSans(
+                              color: theme.textTheme.bodySmall?.color,
+                              fontSize: 12,
                             ),
                           ),
                     error: (e, _) => Text("Error: $e"),
